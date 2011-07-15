@@ -14,7 +14,7 @@
     }
     
     // Set the slang version
-    slang.version = '0.1.0';
+    slang.version = '0.1.1';
     
     // String utility functions
     // ------------------------
@@ -225,6 +225,21 @@
         }
         
         return buf.join('');
+    }
+    
+    // Adds the methods from the slang object to String.prototype
+    slang.addToPrototype = function protoize() {
+        for (key in slang) {
+            if (key === 'guid' || key === 'isString' || key === 'version' || key === 'addToPrototype')
+                continue;
+            
+            (function(key) {
+                String.prototype[key] = function() {
+                    var args = Array.prototype.slice.call(arguments)
+                    return slang[key].apply(slang, [this].concat(args));
+                }
+            })(key);
+        }
     }
 
 })();
