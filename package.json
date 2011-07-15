@@ -12,5 +12,5 @@
       "url": "https://github.com/devongovett/slang.git"
   },
   "bugs": "http://github.com/devongovett/slang/issues",
-  "main": "slang.js",
+  "main": "slang.js"
 }
