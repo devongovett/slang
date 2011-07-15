@@ -87,6 +87,4 @@ assert.equal('AAAA0000', slang.successor('ZZZ9999'));
 
 // Test **slang.guid**
 assert.equal(32, slang.guid().length, 'slang.guid failed');
-assert.equal(16, slang.guid(16).length, 'slang.guid failed')
-
-console.log(slang.guid(15))
+assert.equal(16, slang.guid(16).length, 'slang.guid failed');
