@@ -146,6 +146,12 @@ Returns a unique guid of the specified length, or 32 by default
     slang.guid();   // "gE9FEtJknQVy3qkN9fxmTucYKTwFOno2"
     slang.guid(15); // "b0apU4OH7ZgmEoU"
     
+### slang.addToPrototype
+Adds the methods from the slang object to String.prototype.  Does not add slang.guid, slang.isString, slang.version, or itself.
+
+    slang.addToPrototype()
+    "test".capitalize() // "Test"
+    
 ## License
 
 slang is licensed under the MIT license.
