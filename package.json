@@ -1,0 +1,16 @@
+{
+  "name": "slang",
+  "description": "A collection of utility functions for strings",
+  "version": "0.1.0",
+  "author": {
+      "name": "Devon Govett",
+      "email": "devongovett@gmail.com",
+      "url": "http://badassjs.com/"
+  },
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/devongovett/slang.git"
+  },
+  "bugs": "http://github.com/devongovett/slang/issues",
+  "main": "slang.js",
+}
