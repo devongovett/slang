@@ -149,8 +149,8 @@ Returns a unique guid of the specified length, or 32 by default
 ### slang.addToPrototype
 Adds the methods from the slang object to String.prototype.  Does not add slang.guid, slang.isString, slang.version, or itself.
 
-    slang.addToPrototype()
-    "test".capitalize() // "Test"
+    slang.addToPrototype();
+    "test".capitalize(); // "Test"
     
 ## License
 
