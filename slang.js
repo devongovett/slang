@@ -14,7 +14,7 @@
     }
     
     // Set the slang version
-    slang.version = '0.1.1';
+    slang.version = '0.1.2';
     
     // String utility functions
     // ------------------------
@@ -138,7 +138,8 @@
     
     // Returns whether `input` ends with `string`
     slang.endsWith = function endsWith(input, string) {
-        return input.indexOf(string) === input.length - string.length;
+        var index = input.length - string.length;
+        return index >= 0 && input.indexOf(string, index) > -1;
     }
     
     // Returns whether `input` is empty or only contains whitespace
@@ -228,7 +229,7 @@
     }
     
     // Adds the methods from the slang object to String.prototype
-    slang.addToPrototype = function protoize() {
+    slang.addToPrototype = function addToPrototype() {
         for (key in slang) {
             if (key === 'guid' || key === 'isString' || key === 'version' || key === 'addToPrototype')
                 continue;
