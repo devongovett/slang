@@ -30,7 +30,7 @@ Uncapitalizes the first character of a string
 ### slang.capitalizeWords
 Capitalizes each word in the string
 
-    slang.capitalizeWords('hello world!'); // "Hello world!"
+    slang.capitalizeWords('hello world!'); // "Hello World!"
     
 ### slang.uncapitalizeWords
 Uncapitalizes each word in the string
