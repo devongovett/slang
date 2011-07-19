@@ -82,7 +82,7 @@
                     .toLowerCase();
     }
     
-    // Concatinates the string `count` times
+    // Concatenates the string `count` times
     slang.repeat = function repeat(input, count) {
         return count < 1 ? '' : new Array(count + 1).join(input);
     }

@@ -64,7 +64,7 @@ Converts a string of words or a camelCased string into a series of words separat
     slang.dasherize('this is dashed'); // "this-is-dashed"
     
 ### slang.repeat
-Concatinates the string `count` times
+Concatenates the string `count` times
 
     slang.repeat('Ho! ', 3); // "Ho! Ho! Ho! "
     
