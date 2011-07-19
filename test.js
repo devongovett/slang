@@ -71,7 +71,8 @@ assert.equal(false, slang.startsWith('hello world', 'rainbow'));
 
 // Test **slang.endsWith**
 assert.ok(slang.endsWith('hello world', 'world'), 'slang.endsWith failed');
-assert.equal(false, slang.endsWith('hello world', 'rainbow'));
+assert.equal(false, slang.endsWith('hello world', 'rainbow'), 'slang.endsWith failed');
+assert.ok(slang.endsWith('hello hello', 'lo'), 'slang.endsWith failed');
 
 // Test **slang.isBlank**
 assert.ok(slang.isBlank(''), 'slang.isBlank failed');
