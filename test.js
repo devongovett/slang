@@ -61,6 +61,15 @@ assert.equal(' hello', slang.trimRight(' hello '));
 assert.equal('red, blue and green', slang.join(['red', 'blue', 'green']));
 assert.equal('red, blue or green', slang.join(['red', 'blue', 'green'], 'or'));
 
+// Test **slang.humanize**
+assert.equal('1st', slang.humanize(1));
+assert.equal('2nd', slang.humanize(2));
+assert.equal('3rd', slang.humanize(3));
+assert.equal('4th', slang.humanize(4));
+assert.equal('11th', slang.humanize(11));
+assert.equal('23rd', slang.humanize(23));
+assert.equal('104th', slang.humanize(104));
+
 // Test **slang.contains**
 assert.ok(slang.contains('hello world', 'world'), 'slang.contains failed');
 assert.equal(false, slang.contains('hello world', 'unicorn'), 'slang.contains failed');

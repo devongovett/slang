@@ -126,6 +126,21 @@
         return array.join(', ') + ' ' + last + ' ' + lastItem;
     }
     
+    // Returns a humanized number with the correct suffix
+    // such as 1st, 2nd, 3rd or 4th
+    slang.humanize = function humanize(number) {
+        if(number % 100 >= 11 && number % 100 <= 13)
+            return number + "th";
+        
+        switch(number % 10) {
+            case 1: return number + "st";
+            case 2: return number + "nd";
+            case 3: return number + "rd";
+        }
+        
+        return number + "th";
+    }
+    
     // Returns whether `input` contains `string`
     slang.contains = function contains(input, string) {
         return input.indexOf(string) > -1;
@@ -231,8 +246,13 @@
     // Adds the methods from the slang object to String.prototype
     slang.addToPrototype = function addToPrototype() {
         for (key in slang) {
-            if (key === 'guid' || key === 'isString' || key === 'version' || key === 'addToPrototype')
-                continue;
+            if (key === 'guid' || 
+                key === 'humanize' ||
+                key === 'isString' || 
+                key === 'version' || 
+                key === 'addToPrototype') {
+                    continue;
+            }
             
             (function(key) {
                 String.prototype[key] = function() {

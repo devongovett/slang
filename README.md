@@ -103,6 +103,12 @@ Joins an array into a humanized list.  The last element is joined by "and" by de
 
     slang.join(['red', 'blue', 'green']);       // "red, blue and green"
     slang.join(['red', 'blue', 'green'], 'or'); // "red, blue or green"
+
+### slang.humanize
+Returns a humanized number with the correct suffix such as 1st, 2nd, 3rd or 4th.
+
+	slang.humanize(2);	 // "2nd"
+	slang.humanize(103); // "103rd"
     
 ### slang.contains
 Returns whether `input` contains `string`
@@ -147,7 +153,7 @@ Returns a unique guid of the specified length, or 32 by default
     slang.guid(15); // "b0apU4OH7ZgmEoU"
     
 ### slang.addToPrototype
-Adds the methods from the slang object to String.prototype.  Does not add slang.guid, slang.isString, slang.version, or itself.
+Adds the methods from the slang object to String.prototype.  Does not add slang.guid, slang.humanize, slang.isString, slang.version, or itself.
 
     slang.addToPrototype();
     "test".capitalize(); // "Test"
