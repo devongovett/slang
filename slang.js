@@ -109,12 +109,12 @@
     
     // Removes the leading whitespace from `input`
     slang.trimLeft = function trimLeft(input) {
-        return input.trimLeft ? input.trimLeft() : input.replace(/^s+/, '');
+        return input.trimLeft ? input.trimLeft() : input.replace(/^\s+/, '');
     }
     
     // Remove the trailing whitespace from `input`
     slang.trimRight = function trimRight(input) {
-        return input.trimRight ? input.trimRight() : input.replace(/s+$/, '');
+        return input.trimRight ? input.trimRight() : input.replace(/\s+$/, '');
     }
     
     // Joins an array into a humanized list.  The last element is joined 
