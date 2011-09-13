@@ -117,6 +117,15 @@
         return input.trimRight ? input.trimRight() : input.replace(/\s+$/, '');
     }
     
+	// Truncate to n characters
+	slang.truncate = function truncate(input, args) {
+		var defaults = { limit: 10, omission: '...' };
+		for( var o in args ) {
+			defaults[ o ] = args[ o ];
+		}
+		return input.length <= defaults.limit ? input : input.slice( 0, defaults.limit ) + defaults.omission;
+	}
+	
     // Joins an array into a humanized list.  The last element is joined 
     // by "and" by default, but you can change it.
     slang.join = function join(array, last) {
