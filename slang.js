@@ -112,7 +112,7 @@
         return input.trimLeft ? input.trimLeft() : input.replace(/^\s+/, '');
     }
     
-    // Remove the trailing whitespace from `input`
+    // Removes the trailing whitespace from `input`
     slang.trimRight = function trimRight(input) {
         return input.trimRight ? input.trimRight() : input.replace(/\s+$/, '');
     }

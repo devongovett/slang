@@ -94,7 +94,7 @@ Removes the leading whitespace from `input`
     slang.trimLeft(' hello '); // "hello "
     
 ### slang.trimRight
-Remove the trailing whitespace from `input`
+Removes the trailing whitespace from `input`
 
     slang.trimRight(' hello '); // " hello"
     
