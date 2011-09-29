@@ -57,6 +57,12 @@ assert.equal('hello ', slang.trimLeft(' hello '));
 // Test **slang.trimRight
 assert.equal(' hello', slang.trimRight(' hello '));
 
+// Test **slang.truncate**
+assert.equal('Lorem ipsu...', slang.truncate('Lorem ipsum dolor sit amet.'));
+assert.equal('Lorem ipsum...', slang.truncate('Lorem ipsum dolor sit amet.', { limit: 11 }));
+assert.equal('Lorem...(read more)', slang.truncate('Lorem ipsum dolor sit amet.', { limit: 5, omission: '...(read more)' }));
+assert.equal('Lorem ipsu...(read more)', slang.truncate('Lorem ipsum dolor sit amet.', { omission: '...(read more)' }));
+
 // Test **slang.join**
 assert.equal('red, blue and green', slang.join(['red', 'blue', 'green']));
 assert.equal('red, blue or green', slang.join(['red', 'blue', 'green'], 'or'));
@@ -98,9 +104,3 @@ assert.equal('AAAA0000', slang.successor('ZZZ9999'));
 // Test **slang.guid**
 assert.equal(32, slang.guid().length, 'slang.guid failed');
 assert.equal(16, slang.guid(16).length, 'slang.guid failed');
-
-// Test **slang.truncate**
-assert.equal( 'Lorem ipsu...', slang.truncate( 'Lorem ipsum dolor sit amet.' ), 'slang.truncate failed' );
-assert.equal( 'Lorem ipsum...', slang.truncate( 'Lorem ipsum dolor sit amet.', { limit: 11 } ), 'slang.truncate failed' );
-assert.equal( 'Lorem...(read more)', slang.truncate( 'Lorem ipsum dolor sit amet.', { limit: 5, omission: '...(read more)' } ), 'slang.truncate failed' );
-assert.equal( 'Lorem ipsu...(read more)', slang.truncate( 'Lorem ipsum dolor sit amet.', { omission: '...(read more)' } ), 'slang.truncate failed' );
