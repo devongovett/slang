@@ -98,3 +98,9 @@ assert.equal('AAAA0000', slang.successor('ZZZ9999'));
 // Test **slang.guid**
 assert.equal(32, slang.guid().length, 'slang.guid failed');
 assert.equal(16, slang.guid(16).length, 'slang.guid failed');
+
+// Test **slang.truncate**
+assert.equal( 'Lorem ipsu...', slang.truncate( 'Lorem ipsum dolor sit amet.' ), 'slang.truncate failed' );
+assert.equal( 'Lorem ipsum...', slang.truncate( 'Lorem ipsum dolor sit amet.', { limit: 11 } ), 'slang.truncate failed' );
+assert.equal( 'Lorem...(read more)', slang.truncate( 'Lorem ipsum dolor sit amet.', { limit: 5, omission: '...(read more)' } ), 'slang.truncate failed' );
+assert.equal( 'Lorem ipsu...(read more)', slang.truncate( 'Lorem ipsum dolor sit amet.', { omission: '...(read more)' } ), 'slang.truncate failed' );
