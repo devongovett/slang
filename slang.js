@@ -109,14 +109,22 @@
     
     // Removes the leading whitespace from `input`
     slang.trimLeft = function trimLeft(input) {
-        return input.trimLeft ? input.trimLeft() : input.replace(/^s+/, '');
+        return input.trimLeft ? input.trimLeft() : input.replace(/^\s+/, '');
     }
     
-    // Remove the trailing whitespace from `input`
+    // Removes the trailing whitespace from `input`
     slang.trimRight = function trimRight(input) {
-        return input.trimRight ? input.trimRight() : input.replace(/s+$/, '');
+        return input.trimRight ? input.trimRight() : input.replace(/\s+$/, '');
     }
     
+	// Truncates `input` to `args.limit` or 10 and adds `args.omission` or "..."
+    slang.truncate = function truncate(input, args) {
+        var limit = args && args.limit || 10,
+            omission = args && args.omission || '...';
+
+        return input.length <= limit ? input : input.slice(0, limit) + omission;
+    }
+	
     // Joins an array into a humanized list.  The last element is joined 
     // by "and" by default, but you can change it.
     slang.join = function join(array, last) {
