@@ -117,13 +117,12 @@
         return input.trimRight ? input.trimRight() : input.replace(/\s+$/, '');
     }
     
-	// Truncate to n characters
+	// Truncates `input` to `args.limit` or 10 and adds `args.omission` or "..."
     slang.truncate = function truncate(input, args) {
-        var defaults = { limit: 10, omission: '...' };
-        for( var o in args ) {
-            defaults[ o ] = args[ o ];
-        }
-        return input.length <= defaults.limit ? input : input.slice( 0, defaults.limit ) + defaults.omission;
+        var limit = args && args.limit || 10,
+            omission = args && args.omission || '...';
+
+        return input.length <= limit ? input : input.slice(0, limit) + omission;
     }
 	
     // Joins an array into a humanized list.  The last element is joined 
