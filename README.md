@@ -98,6 +98,12 @@ Removes the trailing whitespace from `input`
 
     slang.trimRight(' hello '); // " hello"
     
+### slang.truncate
+Truncates `input` to `args.limit` or 10 and adds `args.omission` or "..."
+
+    slang.truncate('Lorem ipsum dolor sit amet.');                                           // 'Lorem ipsu...'
+    slang.truncate('Lorem ipsum dolor sit amet.', { limit: 5, omission: '...(read more)' }); // 'Lorem...(read more)'
+    
 ### slang.join
 Joins an array into a humanized list.  The last element is joined by "and" by default, but you can change it.
 
