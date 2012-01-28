@@ -104,3 +104,50 @@ assert.equal('AAAA0000', slang.successor('ZZZ9999'));
 // Test **slang.guid**
 assert.equal(32, slang.guid().length, 'slang.guid failed');
 assert.equal(16, slang.guid(16).length, 'slang.guid failed');
+
+// Test **slang.pluralize**
+assert.equal(slang.pluralize('cooperation'), 'cooperation');
+assert.equal(slang.pluralize('man'), 'men');
+assert.equal(slang.pluralize('quiz'), 'quizzes');
+assert.equal(slang.pluralize('battery'), 'batteries');
+assert.equal(slang.pluralize('bus'), 'buses');
+assert.equal(slang.pluralize('mouse'), 'mice');
+assert.equal(slang.pluralize('alias'), 'aliases');
+assert.equal(slang.pluralize('octopus'), 'octopi');
+assert.equal(slang.pluralize('fox'), 'foxes');
+assert.equal(slang.pluralize('matrix'), 'matrices');
+assert.equal(slang.pluralize('update'), 'updates');
+assert.equal(slang.pluralize('potato'), 'potatoes');
+assert.equal(slang.pluralize('todo'), 'todos');
+assert.equal(slang.pluralize('sheep'), 'sheep');
+assert.equal(slang.pluralize('person'), 'people');
+assert.equal(slang.pluralize('this'), 'that');
+assert.equal(slang.pluralize('crisis'), 'crises');
+
+// Test **slang.singularize**
+assert.equal(slang.singularize('buses'), 'bus');
+assert.equal(slang.singularize('wives'), 'wife');
+assert.equal(slang.singularize('sheep'), 'sheep');
+assert.equal(slang.singularize('lamps'), 'lamp');
+assert.equal(slang.singularize('octopi'), 'octopus');
+assert.equal(slang.singularize('crises'), 'crisis');
+assert.equal(slang.singularize('mice'), 'mouse');
+assert.equal(slang.singularize('families'), 'family');
+assert.equal(slang.singularize('vertices'), 'vertex');
+assert.equal(slang.singularize('men'), 'man');
+assert.equal(slang.singularize('shoes'), 'shoe');
+assert.equal(slang.singularize('synopses'), 'synopsis');
+assert.equal(slang.singularize('batteries'), 'battery');
+assert.equal(slang.singularize('updates'), 'update');
+assert.equal(slang.singularize('people'), 'person');
+assert.equal(slang.singularize('that'), 'this');
+assert.equal(slang.singularize('foxes'), 'fox');
+assert.equal(slang.singularize('todos'), 'todo');
+assert.equal(slang.singularize('potatoes'), 'potato');
+
+// Test **slang.language**
+slang.lang = 'foo';
+assert.equal(slang.pluralize('bus'), 'bus');
+assert.equal(slang.pluralize('bus', 'en'), 'buses');
+assert.equal(slang.singularize('men'), 'men');
+assert.equal(slang.singularize('men', 'en'), 'man');

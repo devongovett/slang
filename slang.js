@@ -14,7 +14,7 @@
     }
     
     // Set the slang version
-    slang.version = '0.1.2';
+    slang.version = '0.2.0';
     
     // String utility functions
     // ------------------------
@@ -251,10 +251,93 @@
         return buf.join('');
     }
     
+    // Inflection
+    // ----------
+    
+    // Set default language for inflection methods
+    slang.lang = 'en';
+    
+    // Object to hold languages for inflection
+    // Add slang.Language objects to this
+    slang.languages = {};
+    
+    // Define object to hold information about a language
+    function Language() {
+        this.plural = [];
+        this.singular = [];
+        this.uncountable = [];
+        this.irregular = {
+            plural: {},
+            singular: {}
+        };
+    }
+    
+    slang.Language = Language;
+    
+    // Adds an array of irregular words to the language.
+    // Provide an array of arrays containing the singular
+    // and plural versions of the word
+    Language.prototype.addIrregular = function(irregular) {
+        for (var i = 0, len = irregular.length; i < len; i++) {
+            var item = irregular[i];
+            this.irregular.plural[item[0]] = item[1];
+            this.irregular.singular[item[1]] = item[0];
+        }
+    }
+    
+    // Inflects a word by the specified type ('singular' or 'plural')
+    Language.prototype.inflect = function(word, type) {
+        // Check if this word is uncountable
+        if (~this.uncountable.indexOf(word.toLowerCase()))
+            return word;
+        
+        // Check if this word is irregular
+        var irregular = this.irregular[type][word];
+        if (irregular)
+            return irregular;
+        
+        // Check rules until a match is found
+        var rules = this[type];
+        for (var i = 0, len = rules.length; i < len; i++) {
+            var regexp = rules[i][0];
+            if (regexp.test(word))
+                return word.replace(regexp, rules[i][1]);
+        }
+        
+        return word;
+    }
+    
+    // Pluralize a word in the specified language
+    // or `slang.lang` by default
+    slang.pluralize = function(word, lang) {
+        lang || (lang = slang.lang);
+        lang = slang.languages[lang];
+        
+        if (!lang)
+            return word;
+        
+        return lang.inflect(word, 'plural');
+    }
+    
+    // Singularize a word in the specified language
+    // or `slang.lang` by default
+    slang.singularize = function(word, lang) {
+        lang || (lang = slang.lang);
+        lang = slang.languages[lang];
+        
+        if (!lang)
+            return word;
+            
+        return lang.inflect(word, 'singular');
+    }
+    
     // Adds the methods from the slang object to String.prototype
     slang.addToPrototype = function addToPrototype() {
         for (key in slang) {
             if (key === 'guid' || 
+                key === 'lang' ||
+                key === 'languages' ||
+                key === 'Language' ||
                 key === 'humanize' ||
                 key === 'isString' || 
                 key === 'version' || 
@@ -270,5 +353,117 @@
             })(key);
         }
     }
+    
+    // English Inflector
+    // -----------------
+    
+    // Define language for English
+    var en = slang.languages['en'] = new slang.Language();
+    
+    en.plural = [
+        [/(todo)$/i, "$1s"],
+        [/(matr|vert|ind)(?:ix|ex)$/i, "$1ices"],
+        [/(octop|vir)us$/i, "$1i"],
+        [/(alias|status)$/i, "$1es"],
+        [/(cris|ax|test)is$/i, "$1es"],
+        [/(s|ss|sh|ch|x|o)$/i, "$1es"],
+        [/y$/i, "ies"],
+        [/(o|e)y$/i, "$1ys"],
+        [/([ti])um$/i, "$1a"],
+        [/sis$/i, "ses"],
+        [/(?:([^f])fe|([lr])f)$/i, "$1$2ves"],
+        [/([^aeiouy]|qu)y$/i, "$1ies"],
+        [/([m|l])ouse$/i, "$1ice"],
+        [/^(ox)$/i, "$1en"],
+        [/(quiz)$/i, "$1zes"],
+        [/$/, "s"]
+    ];
+
+    en.singular = [
+        [/(bu|mis|kis)s$/i, "$1s"],
+        [/([ti])a$/i, "$1um"],
+        [/((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$/i, "$1$2sis"],
+        [/(^analy)ses$/i, "$1sis"],
+        [/([^f])ves$/i, "$1fe"],
+        [/([lr])ves$/i, "$1f"],
+        [/([^aeiouy]|qu)ies$/i, "$1y"],
+        [/ies$/i, "ie"],
+        [/(x|ch|ss|sh)es$/i, "$1"],
+        [/([m|l])ice$/i, "$1ouse"],
+        [/(bus)es$/i, "$1"],
+        [/(shoe)s$/i, "$1"],
+        [/(o)es$/i, "$1"],
+        [/(cris|ax|test)es$/i, "$1is"],
+        [/(octop|vir)i$/i, "$1us"],
+        [/(alias|status)es$/i, "$1"],
+        [/^(ox)en/i, "$1"],
+        [/(vert|ind)ices$/i, "$1ex"],
+        [/(matr)ices$/i, "$1ix"],
+        [/(quiz)zes$/i, "$1"],
+        [/s$/i, ""]
+    ];
+
+    en.addIrregular([
+        ['i', 'we'],
+        ['person', 'people'],
+        ['man', 'men'],
+        ['child', 'children'],
+        ['move', 'moves'],
+        ['she', 'they'],
+        ['he', 'they'],
+        ['myself', 'ourselves'],
+        ['yourself', 'ourselves'],
+        ['himself', 'themselves'],
+        ['herself', 'themselves'],
+        ['themself', 'themselves'],
+        ['mine', 'ours'],
+        ['hers', 'theirs'],
+        ['his', 'theirs'],
+        ['its', 'theirs'],
+        ['theirs', 'theirs'],
+        ['sex', 'sexes'],
+        ['this', 'that']
+    ]);
+
+    en.uncountable = [
+        'advice',
+        'enegery',
+        'excretion',
+        'digestion',
+        'cooperation',
+        'health',
+        'justice',
+        'jeans',
+        'labour',
+        'machinery',
+        'equipment',
+        'information',
+        'pollution',
+        'sewage',
+        'paper',
+        'money',
+        'species',
+        'series',
+        'rain',
+        'rice',
+        'fish',
+        'sheep',
+        'moose',
+        'deer',
+        'bison',
+        'proceedings',
+        'shears',
+        'pincers',
+        'breeches',
+        'hijinks',
+        'clippers',
+        'chassis',
+        'innings',
+        'elk',
+        'rhinoceros',
+        'swine',
+        'you',
+        'news'
+    ];
 
 })();

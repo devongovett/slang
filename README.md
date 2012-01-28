@@ -164,6 +164,41 @@ Adds the methods from the slang object to String.prototype.  Does not add slang.
     slang.addToPrototype();
     "test".capitalize(); // "Test"
     
+### slang.lang
+The default language to be used with all inflection methods. Initially set to 'en' for English.
+    
+### slang.pluralize
+Pluralizes a string in the specified language or `slang.lang` by default
+
+    inflector.pluralize('man') // 'men'
+    inflector.pluralize('word', 'de') // non-default language
+    
+### slang.singularize
+Singularizes a string in the specified language or `slang.lang` by default
+
+    inflector.singularize('men') // 'man'
+    inflector.singularize('word', 'de') // non-default language
+    
+### slang.Language
+An object that describes a language's inflection rules.  See source code for example usage.
+
+### slang.languages
+An object holding `slang.Language` objects that describe various languages.  English ('en') is provided
+by default and you can add additional languages by adding them to `slang.languages`.  Then you can set
+the default language to this new language by setting `slang.lang` or just use your language by passing
+the language code as the second argument to `slang.pluralize` or `slang.singularize`.
+
+    // Create a language
+    var german = new slang.Language();
+    // Now add inflection rules
+    // ...
+
+    // Add language
+    slang.languages['de'] = german;
+
+    // Set default language
+    slang.lang = 'de';
+    
 ## License
 
 slang is licensed under the MIT license.
