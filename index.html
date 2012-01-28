@@ -5,7 +5,7 @@
     <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">slang</span> <span class="o">=</span> <span class="nx">slang</span><span class="p">;</span>
     <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Set the slang version</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">version</span> <span class="o">=</span> <span class="s1">&#39;0.1.2&#39;</span><span class="p">;</span>
+    </pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Set the slang version</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">version</span> <span class="o">=</span> <span class="s1">&#39;0.2.0&#39;</span><span class="p">;</span>
     </pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <h2>String utility functions</h2>             </td>             <td class="code">               <div class="highlight"><pre>    </pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>Returns whether <code>input</code> is a string</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">isString</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">isString</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">return</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">toString</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span> <span class="o">===</span> <span class="s1">&#39;[object String]&#39;</span><span class="p">;</span>
     <span class="p">}</span>
@@ -187,9 +187,69 @@ slang.successor("ZZZ9999")   == "AAAA0000"
         
         <span class="k">return</span> <span class="nx">buf</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
     <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-33">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-33">&#182;</a>               </div>               <p>Adds the methods from the slang object to String.prototype</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">addToPrototype</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">addToPrototype</span><span class="p">()</span> <span class="p">{</span>
+    </pre></div>             </td>           </tr>                               <tr id="section-33">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-33">&#182;</a>               </div>               <h2>Inflection</h2>             </td>             <td class="code">               <div class="highlight"><pre>    </pre></div>             </td>           </tr>                               <tr id="section-34">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-34">&#182;</a>               </div>               <p>Set default language for inflection methods</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">lang</span> <span class="o">=</span> <span class="s1">&#39;en&#39;</span><span class="p">;</span>
+    </pre></div>             </td>           </tr>                               <tr id="section-35">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-35">&#182;</a>               </div>               <p>Object to hold languages for inflection
+Add slang.Language objects to this</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">languages</span> <span class="o">=</span> <span class="p">{};</span>
+    </pre></div>             </td>           </tr>                               <tr id="section-36">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-36">&#182;</a>               </div>               <p>Define object to hold information about a language</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="kd">function</span> <span class="nx">Language</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">plural</span> <span class="o">=</span> <span class="p">[];</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">singular</span> <span class="o">=</span> <span class="p">[];</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">uncountable</span> <span class="o">=</span> <span class="p">[];</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">irregular</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="nx">plural</span><span class="o">:</span> <span class="p">{},</span>
+            <span class="nx">singular</span><span class="o">:</span> <span class="p">{}</span>
+        <span class="p">};</span>
+    <span class="p">}</span>
+    
+    <span class="nx">slang</span><span class="p">.</span><span class="nx">Language</span> <span class="o">=</span> <span class="nx">Language</span><span class="p">;</span>
+    </pre></div>             </td>           </tr>                               <tr id="section-37">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-37">&#182;</a>               </div>               <p>Adds an array of irregular words to the language.
+Provide an array of arrays containing the singular
+and plural versions of the word</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">Language</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">addIrregular</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">irregular</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">len</span> <span class="o">=</span> <span class="nx">irregular</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">len</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">item</span> <span class="o">=</span> <span class="nx">irregular</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">irregular</span><span class="p">.</span><span class="nx">plural</span><span class="p">[</span><span class="nx">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="nx">item</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">irregular</span><span class="p">.</span><span class="nx">singular</span><span class="p">[</span><span class="nx">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="nx">item</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    </pre></div>             </td>           </tr>                               <tr id="section-38">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-38">&#182;</a>               </div>               <p>Inflects a word by the specified type ('singular' or 'plural')</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">Language</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">inflect</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">word</span><span class="p">,</span> <span class="nx">type</span><span class="p">)</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-39">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-39">&#182;</a>               </div>               <p>Check if this word is uncountable</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="k">if</span> <span class="p">(</span><span class="o">~</span><span class="k">this</span><span class="p">.</span><span class="nx">uncountable</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">word</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()))</span>
+            <span class="k">return</span> <span class="nx">word</span><span class="p">;</span>
+        </pre></div>             </td>           </tr>                               <tr id="section-40">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-40">&#182;</a>               </div>               <p>Check if this word is irregular</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="kd">var</span> <span class="nx">irregular</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">irregular</span><span class="p">[</span><span class="nx">type</span><span class="p">][</span><span class="nx">word</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">irregular</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nx">irregular</span><span class="p">;</span>
+        </pre></div>             </td>           </tr>                               <tr id="section-41">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-41">&#182;</a>               </div>               <p>Check rules until a match is found</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="kd">var</span> <span class="nx">rules</span> <span class="o">=</span> <span class="k">this</span><span class="p">[</span><span class="nx">type</span><span class="p">];</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">len</span> <span class="o">=</span> <span class="nx">rules</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">len</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">regexp</span> <span class="o">=</span> <span class="nx">rules</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">regexp</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">word</span><span class="p">))</span>
+                <span class="k">return</span> <span class="nx">word</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">regexp</span><span class="p">,</span> <span class="nx">rules</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]);</span>
+        <span class="p">}</span>
+        
+        <span class="k">return</span> <span class="nx">word</span><span class="p">;</span>
+    <span class="p">}</span>
+    </pre></div>             </td>           </tr>                               <tr id="section-42">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-42">&#182;</a>               </div>               <p>Pluralize a word in the specified language
+or <code>slang.lang</code> by default</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">pluralize</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">word</span><span class="p">,</span> <span class="nx">lang</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">lang</span> <span class="o">||</span> <span class="p">(</span><span class="nx">lang</span> <span class="o">=</span> <span class="nx">slang</span><span class="p">.</span><span class="nx">lang</span><span class="p">);</span>
+        <span class="nx">lang</span> <span class="o">=</span> <span class="nx">slang</span><span class="p">.</span><span class="nx">languages</span><span class="p">[</span><span class="nx">lang</span><span class="p">];</span>
+        
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">lang</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nx">word</span><span class="p">;</span>
+        
+        <span class="k">return</span> <span class="nx">lang</span><span class="p">.</span><span class="nx">inflect</span><span class="p">(</span><span class="nx">word</span><span class="p">,</span> <span class="s1">&#39;plural&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+    </pre></div>             </td>           </tr>                               <tr id="section-43">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-43">&#182;</a>               </div>               <p>Singularize a word in the specified language
+or <code>slang.lang</code> by default</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">singularize</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">word</span><span class="p">,</span> <span class="nx">lang</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">lang</span> <span class="o">||</span> <span class="p">(</span><span class="nx">lang</span> <span class="o">=</span> <span class="nx">slang</span><span class="p">.</span><span class="nx">lang</span><span class="p">);</span>
+        <span class="nx">lang</span> <span class="o">=</span> <span class="nx">slang</span><span class="p">.</span><span class="nx">languages</span><span class="p">[</span><span class="nx">lang</span><span class="p">];</span>
+        
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">lang</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nx">word</span><span class="p">;</span>
+            
+        <span class="k">return</span> <span class="nx">lang</span><span class="p">.</span><span class="nx">inflect</span><span class="p">(</span><span class="nx">word</span><span class="p">,</span> <span class="s1">&#39;singular&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+    </pre></div>             </td>           </tr>                               <tr id="section-44">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-44">&#182;</a>               </div>               <p>Adds the methods from the slang object to String.prototype</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">addToPrototype</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">addToPrototype</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">for</span> <span class="p">(</span><span class="nx">key</span> <span class="k">in</span> <span class="nx">slang</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">if</span> <span class="p">(</span><span class="nx">key</span> <span class="o">===</span> <span class="s1">&#39;guid&#39;</span> <span class="o">||</span> 
+                <span class="nx">key</span> <span class="o">===</span> <span class="s1">&#39;lang&#39;</span> <span class="o">||</span>
+                <span class="nx">key</span> <span class="o">===</span> <span class="s1">&#39;languages&#39;</span> <span class="o">||</span>
+                <span class="nx">key</span> <span class="o">===</span> <span class="s1">&#39;Language&#39;</span> <span class="o">||</span>
                 <span class="nx">key</span> <span class="o">===</span> <span class="s1">&#39;humanize&#39;</span> <span class="o">||</span>
                 <span class="nx">key</span> <span class="o">===</span> <span class="s1">&#39;isString&#39;</span> <span class="o">||</span> 
                 <span class="nx">key</span> <span class="o">===</span> <span class="s1">&#39;version&#39;</span> <span class="o">||</span> 
@@ -205,6 +265,113 @@ slang.successor("ZZZ9999")   == "AAAA0000"
             <span class="p">})(</span><span class="nx">key</span><span class="p">);</span>
         <span class="p">}</span>
     <span class="p">}</span>
+    </pre></div>             </td>           </tr>                               <tr id="section-45">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-45">&#182;</a>               </div>               <h2>English Inflector</h2>             </td>             <td class="code">               <div class="highlight"><pre>    </pre></div>             </td>           </tr>                               <tr id="section-46">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-46">&#182;</a>               </div>               <p>Define language for English</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="kd">var</span> <span class="nx">en</span> <span class="o">=</span> <span class="nx">slang</span><span class="p">.</span><span class="nx">languages</span><span class="p">[</span><span class="s1">&#39;en&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">slang</span><span class="p">.</span><span class="nx">Language</span><span class="p">();</span>
+    
+    <span class="nx">en</span><span class="p">.</span><span class="nx">plural</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">[</span><span class="sr">/(todo)$/i</span><span class="p">,</span> <span class="s2">&quot;$1s&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/(matr|vert|ind)(?:ix|ex)$/i</span><span class="p">,</span> <span class="s2">&quot;$1ices&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/(octop|vir)us$/i</span><span class="p">,</span> <span class="s2">&quot;$1i&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/(alias|status)$/i</span><span class="p">,</span> <span class="s2">&quot;$1es&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/(cris|ax|test)is$/i</span><span class="p">,</span> <span class="s2">&quot;$1es&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/(s|ss|sh|ch|x|o)$/i</span><span class="p">,</span> <span class="s2">&quot;$1es&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/y$/i</span><span class="p">,</span> <span class="s2">&quot;ies&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/(o|e)y$/i</span><span class="p">,</span> <span class="s2">&quot;$1ys&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/([ti])um$/i</span><span class="p">,</span> <span class="s2">&quot;$1a&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/sis$/i</span><span class="p">,</span> <span class="s2">&quot;ses&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/(?:([^f])fe|([lr])f)$/i</span><span class="p">,</span> <span class="s2">&quot;$1$2ves&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/([^aeiouy]|qu)y$/i</span><span class="p">,</span> <span class="s2">&quot;$1ies&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/([m|l])ouse$/i</span><span class="p">,</span> <span class="s2">&quot;$1ice&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/^(ox)$/i</span><span class="p">,</span> <span class="s2">&quot;$1en&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/(quiz)$/i</span><span class="p">,</span> <span class="s2">&quot;$1zes&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/$/</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span><span class="p">]</span>
+    <span class="p">];</span>
+
+    <span class="nx">en</span><span class="p">.</span><span class="nx">singular</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">[</span><span class="sr">/(bu|mis|kis)s$/i</span><span class="p">,</span> <span class="s2">&quot;$1s&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/([ti])a$/i</span><span class="p">,</span> <span class="s2">&quot;$1um&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$/i</span><span class="p">,</span> <span class="s2">&quot;$1$2sis&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/(^analy)ses$/i</span><span class="p">,</span> <span class="s2">&quot;$1sis&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/([^f])ves$/i</span><span class="p">,</span> <span class="s2">&quot;$1fe&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/([lr])ves$/i</span><span class="p">,</span> <span class="s2">&quot;$1f&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/([^aeiouy]|qu)ies$/i</span><span class="p">,</span> <span class="s2">&quot;$1y&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/ies$/i</span><span class="p">,</span> <span class="s2">&quot;ie&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/(x|ch|ss|sh)es$/i</span><span class="p">,</span> <span class="s2">&quot;$1&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/([m|l])ice$/i</span><span class="p">,</span> <span class="s2">&quot;$1ouse&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/(bus)es$/i</span><span class="p">,</span> <span class="s2">&quot;$1&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/(shoe)s$/i</span><span class="p">,</span> <span class="s2">&quot;$1&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/(o)es$/i</span><span class="p">,</span> <span class="s2">&quot;$1&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/(cris|ax|test)es$/i</span><span class="p">,</span> <span class="s2">&quot;$1is&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/(octop|vir)i$/i</span><span class="p">,</span> <span class="s2">&quot;$1us&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/(alias|status)es$/i</span><span class="p">,</span> <span class="s2">&quot;$1&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/^(ox)en/i</span><span class="p">,</span> <span class="s2">&quot;$1&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/(vert|ind)ices$/i</span><span class="p">,</span> <span class="s2">&quot;$1ex&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/(matr)ices$/i</span><span class="p">,</span> <span class="s2">&quot;$1ix&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/(quiz)zes$/i</span><span class="p">,</span> <span class="s2">&quot;$1&quot;</span><span class="p">],</span>
+        <span class="p">[</span><span class="sr">/s$/i</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">]</span>
+    <span class="p">];</span>
+
+    <span class="nx">en</span><span class="p">.</span><span class="nx">addIrregular</span><span class="p">([</span>
+        <span class="p">[</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;we&#39;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;person&#39;</span><span class="p">,</span> <span class="s1">&#39;people&#39;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;man&#39;</span><span class="p">,</span> <span class="s1">&#39;men&#39;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;child&#39;</span><span class="p">,</span> <span class="s1">&#39;children&#39;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;move&#39;</span><span class="p">,</span> <span class="s1">&#39;moves&#39;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;she&#39;</span><span class="p">,</span> <span class="s1">&#39;they&#39;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;he&#39;</span><span class="p">,</span> <span class="s1">&#39;they&#39;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;myself&#39;</span><span class="p">,</span> <span class="s1">&#39;ourselves&#39;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;yourself&#39;</span><span class="p">,</span> <span class="s1">&#39;ourselves&#39;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;himself&#39;</span><span class="p">,</span> <span class="s1">&#39;themselves&#39;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;herself&#39;</span><span class="p">,</span> <span class="s1">&#39;themselves&#39;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;themself&#39;</span><span class="p">,</span> <span class="s1">&#39;themselves&#39;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;mine&#39;</span><span class="p">,</span> <span class="s1">&#39;ours&#39;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;hers&#39;</span><span class="p">,</span> <span class="s1">&#39;theirs&#39;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;his&#39;</span><span class="p">,</span> <span class="s1">&#39;theirs&#39;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;its&#39;</span><span class="p">,</span> <span class="s1">&#39;theirs&#39;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;theirs&#39;</span><span class="p">,</span> <span class="s1">&#39;theirs&#39;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">,</span> <span class="s1">&#39;sexes&#39;</span><span class="p">],</span>
+        <span class="p">[</span><span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;that&#39;</span><span class="p">]</span>
+    <span class="p">]);</span>
+
+    <span class="nx">en</span><span class="p">.</span><span class="nx">uncountable</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;advice&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;enegery&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;excretion&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;digestion&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;cooperation&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;health&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;justice&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;jeans&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;labour&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;machinery&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;equipment&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;information&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;pollution&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;sewage&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;paper&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;money&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;species&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;series&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;rain&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;rice&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;fish&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;sheep&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;moose&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;deer&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;bison&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;proceedings&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;shears&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;pincers&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;breeches&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;hijinks&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;clippers&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;chassis&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;innings&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;elk&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;rhinoceros&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;swine&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;you&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;news&#39;</span>
+    <span class="p">];</span>
 
 <span class="p">})();</span>
 
