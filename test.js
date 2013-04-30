@@ -5,6 +5,13 @@ var slang = require('./slang'),
 assert.ok(slang.isString('test'), 'slang.isString failed.');
 assert.equal(false, slang.isString(true), 'slang.isString failed.');
 
+// Test **slang.partition**
+assert.equal(3, slang.partition('Hello world!', 3)[0].length);
+assert.equal('Hello world!', slang.partition('Hello world!', 3).join(''));
+
+// Test **slang.repartition**
+assert.equal('Hel@lo @wor@ld!', slang.repartition('Hello world!'));
+
 // Test **slang.capitalize**
 assert.equal('Hello world!', slang.capitalize('hello world!'));
 

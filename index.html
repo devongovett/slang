@@ -1,378 +1,1121 @@
-<!DOCTYPE html>  <html> <head>   <title>slang.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               slang.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h2>Module Setup</h2>             </td>             <td class="code">               <div class="highlight"><pre>    </pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Define the internal slang variable</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="kd">var</span> <span class="nx">slang</span> <span class="o">=</span> <span class="p">{};</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Export the slang object as either a CommonJS module, or to the global object</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">module</span> <span class="o">!==</span> <span class="s1">&#39;undefined&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">slang</span><span class="p">;</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">slang</span> <span class="o">=</span> <span class="nx">slang</span><span class="p">;</span>
-    <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Set the slang version</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">version</span> <span class="o">=</span> <span class="s1">&#39;0.2.0&#39;</span><span class="p">;</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <h2>String utility functions</h2>             </td>             <td class="code">               <div class="highlight"><pre>    </pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>Returns whether <code>input</code> is a string</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">isString</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">isString</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">toString</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span> <span class="o">===</span> <span class="s1">&#39;[object String]&#39;</span><span class="p">;</span>
-    <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>Capitalizes the first character of a string</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">capitalize</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">capitalize</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">input</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="nx">toUpperCase</span><span class="p">()</span> <span class="o">+</span> <span class="nx">input</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-    <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>Uncapitalizes the first character of a string</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">uncapitalize</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">uncapitalize</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">input</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">+</span> <span class="nx">input</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-    <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <p>Capitalizes each word in the string</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">capitalizeWords</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">capitalizeWords</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">input</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\w+/g</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">word</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="nx">slang</span><span class="p">.</span><span class="nx">capitalize</span><span class="p">(</span><span class="nx">word</span><span class="p">);</span>
-        <span class="p">});</span>
-    <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <p>Uncapitalizes each word in the string</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">uncapitalizeWords</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">uncapitalizeWords</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">input</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\w+/g</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">word</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="nx">slang</span><span class="p">.</span><span class="nx">uncapitalize</span><span class="p">(</span><span class="nx">word</span><span class="p">);</span>
-        <span class="p">});</span>
-    <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <p>Returns whether the character at the provided character index
-is upper case.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">isUpperCaseAt</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">isUpperCaseAt</span><span class="p">(</span><span class="nx">input</span><span class="p">,</span> <span class="nx">index</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">input</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="nx">index</span><span class="p">).</span><span class="nx">toUpperCase</span><span class="p">()</span> <span class="o">===</span> <span class="nx">input</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="nx">index</span><span class="p">);</span>
-    <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-13">&#182;</a>               </div>               <p>Returns whether the character at the provided character index
-is lower case.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">isLowerCaseAt</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">isLowerCaseAt</span><span class="p">(</span><span class="nx">input</span><span class="p">,</span> <span class="nx">index</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">input</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="nx">index</span><span class="p">).</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">===</span> <span class="nx">input</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="nx">index</span><span class="p">);</span>
-    <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-14">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-14">&#182;</a>               </div>               <p>Inverts the case for each letter in the string</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">swapcase</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">swapcase</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">input</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/([a-z]+)|([A-Z]+)/g</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">match</span><span class="p">,</span> <span class="nx">lower</span><span class="p">,</span> <span class="nx">upper</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="nx">lower</span> <span class="o">?</span> <span class="nx">match</span><span class="p">.</span><span class="nx">toUpperCase</span><span class="p">()</span> <span class="o">:</span> <span class="nx">match</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">();</span>
-        <span class="p">});</span>
-    <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-15">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-15">&#182;</a>               </div>               <p>Converts a string of words seperated by dashes or spaces to camelCase</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">camelize</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">camelize</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">input</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\W+(.)/g</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">match</span><span class="p">,</span> <span class="nx">letter</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="nx">letter</span><span class="p">.</span><span class="nx">toUpperCase</span><span class="p">();</span>
-        <span class="p">});</span>
-    <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-16">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-16">&#182;</a>               </div>               <p>Converts a string of words or a camelCased string into a series of words
-separated by a dash (<code>-</code>)</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">dasherize</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">dasherize</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">input</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\W+/g</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span>
-                    <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/([a-z\d])([A-Z])/g</span><span class="p">,</span> <span class="s1">&#39;$1-$2&#39;</span><span class="p">)</span>
-                    <span class="p">.</span><span class="nx">toLowerCase</span><span class="p">();</span>
-    <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-17">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-17">&#182;</a>               </div>               <p>Concatenates the string <code>count</code> times</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">repeat</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">repeat</span><span class="p">(</span><span class="nx">input</span><span class="p">,</span> <span class="nx">count</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">count</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="o">?</span> <span class="s1">&#39;&#39;</span> <span class="o">:</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="nx">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">).</span><span class="nx">join</span><span class="p">(</span><span class="nx">input</span><span class="p">);</span>
-    <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-18">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-18">&#182;</a>               </div>               <p>Inserts <code>string</code> in <code>input</code> at <code>index</code></p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">insert</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">insert</span><span class="p">(</span><span class="nx">input</span><span class="p">,</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">index</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">input</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">index</span><span class="p">)</span> <span class="o">+</span> <span class="nx">string</span> <span class="o">+</span> <span class="nx">input</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="nx">index</span><span class="p">);</span>
-    <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-19">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-19">&#182;</a>               </div>               <p>Removes the characters between the <code>start</code> and <code>end</code> indexes</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">remove</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">remove</span><span class="p">(</span><span class="nx">input</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">input</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">start</span><span class="p">)</span> <span class="o">+</span> <span class="nx">input</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="nx">end</span><span class="p">);</span>
-    <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-20">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-20">&#182;</a>               </div>               <p>Removes the last character of <code>input</code></p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">chop</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">chop</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">input</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">);</span>
-    <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-21">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-21">&#182;</a>               </div>               <p>Removes leading and trailing whitespace from <code>input</code></p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">trim</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">strip</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">input</span><span class="p">.</span><span class="nx">trim</span> <span class="o">?</span> <span class="nx">input</span><span class="p">.</span><span class="nx">trim</span><span class="p">()</span> <span class="o">:</span> <span class="nx">input</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/^\s+/</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\s+$/</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
-    <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-22">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-22">&#182;</a>               </div>               <p>Removes the leading whitespace from <code>input</code></p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">trimLeft</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">trimLeft</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">input</span><span class="p">.</span><span class="nx">trimLeft</span> <span class="o">?</span> <span class="nx">input</span><span class="p">.</span><span class="nx">trimLeft</span><span class="p">()</span> <span class="o">:</span> <span class="nx">input</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/^\s+/</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
-    <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-23">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-23">&#182;</a>               </div>               <p>Removes the trailing whitespace from <code>input</code></p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">trimRight</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">trimRight</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">input</span><span class="p">.</span><span class="nx">trimRight</span> <span class="o">?</span> <span class="nx">input</span><span class="p">.</span><span class="nx">trimRight</span><span class="p">()</span> <span class="o">:</span> <span class="nx">input</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\s+$/</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
-    <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-24">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-24">&#182;</a>               </div>               <p>Truncates <code>input</code> to <code>args.limit</code> or 10 and adds <code>args.omission</code> or "..."</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">truncate</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">truncate</span><span class="p">(</span><span class="nx">input</span><span class="p">,</span> <span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">limit</span> <span class="o">=</span> <span class="nx">args</span> <span class="o">&amp;&amp;</span> <span class="nx">args</span><span class="p">.</span><span class="nx">limit</span> <span class="o">||</span> <span class="mi">10</span><span class="p">,</span>
-            <span class="nx">omission</span> <span class="o">=</span> <span class="nx">args</span> <span class="o">&amp;&amp;</span> <span class="nx">args</span><span class="p">.</span><span class="nx">omission</span> <span class="o">||</span> <span class="s1">&#39;...&#39;</span><span class="p">;</span>
+<!DOCTYPE html>
 
-        <span class="k">return</span> <span class="nx">input</span><span class="p">.</span><span class="nx">length</span> <span class="o">&lt;=</span> <span class="nx">limit</span> <span class="o">?</span> <span class="nx">input</span> <span class="o">:</span> <span class="nx">input</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">limit</span><span class="p">)</span> <span class="o">+</span> <span class="nx">omission</span><span class="p">;</span>
-    <span class="p">}</span>
-	</pre></div>             </td>           </tr>                               <tr id="section-25">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-25">&#182;</a>               </div>               <p>Joins an array into a humanized list.  The last element is joined 
-by "and" by default, but you can change it.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">join</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">join</span><span class="p">(</span><span class="nx">array</span><span class="p">,</span> <span class="nx">last</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">lastItem</span> <span class="o">=</span> <span class="nx">array</span><span class="p">.</span><span class="nx">pop</span><span class="p">(),</span>
-            <span class="nx">last</span> <span class="o">=</span> <span class="nx">last</span> <span class="o">||</span> <span class="s1">&#39;and&#39;</span><span class="p">;</span>
+<html>
+<head>
+  <title>slang.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
         
-        <span class="k">return</span> <span class="nx">array</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="nx">last</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="nx">lastItem</span><span class="p">;</span>
-    <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-26">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-26">&#182;</a>               </div>               <p>Returns a humanized number with the correct suffix
-such as 1st, 2nd, 3rd or 4th</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">humanize</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">humanize</span><span class="p">(</span><span class="nx">number</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span><span class="p">(</span><span class="nx">number</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">&gt;=</span> <span class="mi">11</span> <span class="o">&amp;&amp;</span> <span class="nx">number</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">&lt;=</span> <span class="mi">13</span><span class="p">)</span>
-            <span class="k">return</span> <span class="nx">number</span> <span class="o">+</span> <span class="s2">&quot;th&quot;</span><span class="p">;</span>
+          <li id="title">
+              <div class="annotation">
+                  <h1>slang.js</h1>
+              </div>
+          </li>
         
-        <span class="k">switch</span><span class="p">(</span><span class="nx">number</span> <span class="o">%</span> <span class="mi">10</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">case</span> <span class="mi">1</span><span class="o">:</span> <span class="k">return</span> <span class="nx">number</span> <span class="o">+</span> <span class="s2">&quot;st&quot;</span><span class="p">;</span>
-            <span class="k">case</span> <span class="mi">2</span><span class="o">:</span> <span class="k">return</span> <span class="nx">number</span> <span class="o">+</span> <span class="s2">&quot;nd&quot;</span><span class="p">;</span>
-            <span class="k">case</span> <span class="mi">3</span><span class="o">:</span> <span class="k">return</span> <span class="nx">number</span> <span class="o">+</span> <span class="s2">&quot;rd&quot;</span><span class="p">;</span>
-        <span class="p">}</span>
         
-        <span class="k">return</span> <span class="nx">number</span> <span class="o">+</span> <span class="s2">&quot;th&quot;</span><span class="p">;</span>
-    <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-27">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-27">&#182;</a>               </div>               <p>Returns whether <code>input</code> contains <code>string</code></p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">contains</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">contains</span><span class="p">(</span><span class="nx">input</span><span class="p">,</span> <span class="nx">string</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">input</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">string</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-    <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-28">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-28">&#182;</a>               </div>               <p>Returns whether <code>input</code> starts with <code>string</code></p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">startsWith</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">startsWith</span><span class="p">(</span><span class="nx">input</span><span class="p">,</span> <span class="nx">string</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">input</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">string</span><span class="p">)</span> <span class="o">===</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-29">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-29">&#182;</a>               </div>               <p>Returns whether <code>input</code> ends with <code>string</code></p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">endsWith</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">endsWith</span><span class="p">(</span><span class="nx">input</span><span class="p">,</span> <span class="nx">string</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">index</span> <span class="o">=</span> <span class="nx">input</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="nx">string</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
-        <span class="k">return</span> <span class="nx">index</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">input</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">string</span><span class="p">,</span> <span class="nx">index</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-    <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-30">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-30">&#182;</a>               </div>               <p>Returns whether <code>input</code> is empty or only contains whitespace</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">isBlank</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">isBlank</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="sr">/^\s*$/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">input</span><span class="p">);</span>
-    <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-31">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-31">&#182;</a>               </div>               <p>Returns the successor to str. The successor is calculated by incrementing characters starting 
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>(<span class="keyword">function</span>() {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <h2>Module Setup</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Define the internal slang variable</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">var</span> slang = {};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Export the slang object as either a CommonJS module, or to the global object</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">if</span> (<span class="keyword">typeof</span> module !== <span class="string">'undefined'</span> &amp;&amp; module.exports) {
+        module.exports = slang;
+    } <span class="keyword">else</span> {
+        <span class="keyword">this</span>.slang = slang;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Set the slang version</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.version = <span class="string">'0.2.1'</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <h2>String utility functions</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Returns whether <code>input</code> is a string</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.isString = <span class="function"><span class="keyword">function</span> <span class="title">isString</span><span class="params">(input)</span> {</span>
+        <span class="keyword">return</span> Object.prototype.toString.call(input) === <span class="string">'[object String]'</span>;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Partitions a string into blocks of n characters<br>See also: <a href="https://gist.github.com/lsauer/2759399">https://gist.github.com/lsauer/2759399</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.partition = <span class="function"><span class="keyword">function</span> <span class="title">partition</span><span class="params">(input, nblock)</span> {</span>
+        <span class="keyword">return</span> input.split(RegExp(<span class="string">"(.{"</span>+nblock+<span class="string">"})"</span>,<span class="string">"gm"</span>)).filter(Boolean);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Partitions a string and subsequently joins all parts</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.repartition = <span class="function"><span class="keyword">function</span> <span class="title">repartition</span><span class="params">(input, nblock, concat)</span> {</span>
+        <span class="keyword">return</span> input.split(RegExp(<span class="string">"(.{"</span>+nblock+<span class="string">"})"</span>,<span class="string">"gm"</span>)).filter(Boolean).join(concat);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Capitalizes the first character of a string</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.capitalize = <span class="function"><span class="keyword">function</span> <span class="title">capitalize</span><span class="params">(input)</span> {</span>
+        <span class="keyword">return</span> input.charAt(<span class="number">0</span>).toUpperCase() + input.slice(<span class="number">1</span>);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>Uncapitalizes the first character of a string</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.uncapitalize = <span class="function"><span class="keyword">function</span> <span class="title">uncapitalize</span><span class="params">(input)</span> {</span>
+        <span class="keyword">return</span> input.charAt(<span class="number">0</span>).toLowerCase() + input.slice(<span class="number">1</span>);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Capitalizes each word in the string</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.capitalizeWords = <span class="function"><span class="keyword">function</span> <span class="title">capitalizeWords</span><span class="params">(input)</span> {</span>
+        <span class="keyword">return</span> input.replace(<span class="regexp">/\w+/g</span>, <span class="keyword">function</span>(word) {
+            <span class="keyword">return</span> slang.capitalize(word);
+        });
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>Uncapitalizes each word in the string</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.uncapitalizeWords = <span class="function"><span class="keyword">function</span> <span class="title">uncapitalizeWords</span><span class="params">(input)</span> {</span>
+        <span class="keyword">return</span> input.replace(<span class="regexp">/\w+/g</span>, <span class="keyword">function</span>(word) {
+            <span class="keyword">return</span> slang.uncapitalize(word);
+        });
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>Returns whether the character at the provided character index
+is upper case.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.isUpperCaseAt = <span class="function"><span class="keyword">function</span> <span class="title">isUpperCaseAt</span><span class="params">(input, index)</span> {</span>
+        <span class="keyword">return</span> input.charAt(index).toUpperCase() === input.charAt(index);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>Returns whether the character at the provided character index
+is lower case.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.isLowerCaseAt = <span class="function"><span class="keyword">function</span> <span class="title">isLowerCaseAt</span><span class="params">(input, index)</span> {</span>
+        <span class="keyword">return</span> input.charAt(index).toLowerCase() === input.charAt(index);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>Inverts the case for each letter in the string</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.swapcase = <span class="function"><span class="keyword">function</span> <span class="title">swapcase</span><span class="params">(input)</span> {</span>
+        <span class="keyword">return</span> input.replace(<span class="regexp">/([a-z]+)|([A-Z]+)/g</span>, <span class="keyword">function</span>(match, lower, upper) {
+            <span class="keyword">return</span> lower ? match.toUpperCase() : match.toLowerCase();
+        });
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>Converts a string of words seperated by dashes or spaces to camelCase</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.camelize = <span class="function"><span class="keyword">function</span> <span class="title">camelize</span><span class="params">(input)</span> {</span>
+        <span class="keyword">return</span> input.replace(<span class="regexp">/\W+(.)/g</span>, <span class="keyword">function</span>(match, letter) {
+            <span class="keyword">return</span> letter.toUpperCase();
+        });
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>Converts a string of words or a camelCased string into a series of words
+separated by a dash (<code>-</code>)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.dasherize = <span class="function"><span class="keyword">function</span> <span class="title">dasherize</span><span class="params">(input)</span> {</span>
+        <span class="keyword">return</span> input.replace(<span class="regexp">/\W+/g</span>, <span class="string">'-'</span>)
+                    .replace(<span class="regexp">/([a-z\d])([A-Z])/g</span>, <span class="string">'$1-$2'</span>)
+                    .toLowerCase();
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>Concatenates the string <code>count</code> times</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.repeat = <span class="function"><span class="keyword">function</span> <span class="title">repeat</span><span class="params">(input, count)</span> {</span>
+        <span class="keyword">return</span> count &lt; <span class="number">1</span> ? <span class="string">''</span> : <span class="keyword">new</span> Array(count + <span class="number">1</span>).join(input);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>Inserts <code>string</code> in <code>input</code> at <code>index</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.insert = <span class="function"><span class="keyword">function</span> <span class="title">insert</span><span class="params">(input, string, index)</span> {</span>
+        <span class="keyword">return</span> input.slice(<span class="number">0</span>, index) + string + input.slice(index);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>Removes the characters between the <code>start</code> and <code>end</code> indexes</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.remove = <span class="function"><span class="keyword">function</span> <span class="title">remove</span><span class="params">(input, start, end)</span> {</span>
+        <span class="keyword">return</span> input.slice(<span class="number">0</span>, start) + input.slice(end);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>Removes the last character of <code>input</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.chop = <span class="function"><span class="keyword">function</span> <span class="title">chop</span><span class="params">(input)</span> {</span>
+        <span class="keyword">return</span> input.slice(<span class="number">0</span>, -<span class="number">1</span>);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>Removes leading and trailing whitespace from <code>input</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.trim = <span class="function"><span class="keyword">function</span> <span class="title">strip</span><span class="params">(input)</span> {</span>
+        <span class="keyword">return</span> input.trim ? input.trim() : input.replace(<span class="regexp">/^\s+/</span>, <span class="string">''</span>).replace(<span class="regexp">/\s+$/</span>, <span class="string">''</span>);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>Removes the leading whitespace from <code>input</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.trimLeft = <span class="function"><span class="keyword">function</span> <span class="title">trimLeft</span><span class="params">(input)</span> {</span>
+        <span class="keyword">return</span> input.trimLeft ? input.trimLeft() : input.replace(<span class="regexp">/^\s+/</span>, <span class="string">''</span>);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <p>Removes the trailing whitespace from <code>input</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.trimRight = <span class="function"><span class="keyword">function</span> <span class="title">trimRight</span><span class="params">(input)</span> {</span>
+        <span class="keyword">return</span> input.trimRight ? input.trimRight() : input.replace(<span class="regexp">/\s+$/</span>, <span class="string">''</span>);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-28">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-28">&#182;</a>
+              </div>
+              <p>Truncates <code>input</code> to <code>args.limit</code> or 10 and adds <code>args.omission</code> or &quot;...&quot;</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.truncate = <span class="function"><span class="keyword">function</span> <span class="title">truncate</span><span class="params">(input, args)</span> {</span>
+        <span class="keyword">var</span> limit = args &amp;&amp; args.limit || <span class="number">10</span>,
+            omission = args &amp;&amp; args.omission || <span class="string">'...'</span>;
+
+        <span class="keyword">return</span> input.length &lt;= limit ? input : input.slice(<span class="number">0</span>, limit) + omission;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-29">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-29">&#182;</a>
+              </div>
+              <p>Joins an array into a humanized list.  The last element is joined 
+by &quot;and&quot; by default, but you can change it.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.join = <span class="function"><span class="keyword">function</span> <span class="title">join</span><span class="params">(array, last)</span> {</span>
+        <span class="keyword">var</span> lastItem = array.pop(),
+            last = last || <span class="string">'and'</span>;
+        
+        <span class="keyword">return</span> array.join(<span class="string">', '</span>) + <span class="string">' '</span> + last + <span class="string">' '</span> + lastItem;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-30">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-30">&#182;</a>
+              </div>
+              <p>Returns a humanized number with the correct suffix
+such as 1st, 2nd, 3rd or 4th</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.humanize = <span class="function"><span class="keyword">function</span> <span class="title">humanize</span><span class="params">(number)</span> {</span>
+        <span class="keyword">if</span>(number % <span class="number">100</span> &gt;= <span class="number">11</span> &amp;&amp; number % <span class="number">100</span> &lt;= <span class="number">13</span>)
+            <span class="keyword">return</span> number + <span class="string">"th"</span>;
+        
+        <span class="keyword">switch</span>(number % <span class="number">10</span>) {
+            <span class="keyword">case</span> <span class="number">1</span>: <span class="keyword">return</span> number + <span class="string">"st"</span>;
+            <span class="keyword">case</span> <span class="number">2</span>: <span class="keyword">return</span> number + <span class="string">"nd"</span>;
+            <span class="keyword">case</span> <span class="number">3</span>: <span class="keyword">return</span> number + <span class="string">"rd"</span>;
+        }
+        
+        <span class="keyword">return</span> number + <span class="string">"th"</span>;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-31">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-31">&#182;</a>
+              </div>
+              <p>Returns whether <code>input</code> contains <code>string</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.contains = <span class="function"><span class="keyword">function</span> <span class="title">contains</span><span class="params">(input, string)</span> {</span>
+        <span class="keyword">return</span> input.indexOf(string) &gt; -<span class="number">1</span>;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-32">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-32">&#182;</a>
+              </div>
+              <p>Returns whether <code>input</code> starts with <code>string</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.startsWith = <span class="function"><span class="keyword">function</span> <span class="title">startsWith</span><span class="params">(input, string)</span> {</span>
+        <span class="keyword">return</span> input.indexOf(string) === <span class="number">0</span>;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-33">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-33">&#182;</a>
+              </div>
+              <p>Returns whether <code>input</code> ends with <code>string</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.endsWith = <span class="function"><span class="keyword">function</span> <span class="title">endsWith</span><span class="params">(input, string)</span> {</span>
+        <span class="keyword">var</span> index = input.length - string.length;
+        <span class="keyword">return</span> index &gt;= <span class="number">0</span> &amp;&amp; input.indexOf(string, index) &gt; -<span class="number">1</span>;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-34">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-34">&#182;</a>
+              </div>
+              <p>Returns whether <code>input</code> is empty or only contains whitespace</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.isBlank = <span class="function"><span class="keyword">function</span> <span class="title">isBlank</span><span class="params">(input)</span> {</span>
+        <span class="keyword">return</span> <span class="regexp">/^\s*$/</span>.test(input);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-35">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-35">&#182;</a>
+              </div>
+              <p>Returns the successor to str. The successor is calculated by incrementing characters starting 
 from the rightmost alphanumeric (or the rightmost character if there are no alphanumerics) in the
 string. Incrementing a digit always results in another digit, and incrementing a letter results in
 another letter of the same case.</p>
-
 <p>If the increment generates a carry, the character to the left of it is incremented. This 
 process repeats until there is no carry, adding an additional character if necessary.</p>
+<pre><code>slang.successor(&quot;abcd&quot;)      == &quot;abce&quot;
+slang.successor(&quot;THX1138&quot;)   == &quot;THX1139&quot;
+slang.successor(&quot;&lt;&lt;koala&gt;&gt;&quot;) == &quot;&lt;&lt;koalb&gt;&gt;&quot;
+slang.successor(&quot;1999zzz&quot;)   == &quot;2000aaa&quot;
+slang.successor(&quot;ZZZ9999&quot;)   == &quot;AAAA0000&quot;</code></pre>
 
-<pre><code>slang.successor("abcd")      == "abce"
-slang.successor("THX1138")   == "THX1139"
-slang.successor("&lt;&lt;koala&gt;&gt;") == "&lt;&lt;koalb&gt;&gt;"
-slang.successor("1999zzz")   == "2000aaa"
-slang.successor("ZZZ9999")   == "AAAA0000"
-</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">successor</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">successor</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">alphabet</span> <span class="o">=</span> <span class="s1">&#39;abcdefghijklmnopqrstuvwxyz&#39;</span><span class="p">,</span>
-            <span class="nx">length</span> <span class="o">=</span> <span class="nx">alphabet</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
-            <span class="nx">result</span> <span class="o">=</span> <span class="nx">input</span><span class="p">,</span>
-            <span class="nx">i</span> <span class="o">=</span> <span class="nx">input</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
-
-        <span class="k">while</span><span class="p">(</span><span class="nx">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">last</span> <span class="o">=</span> <span class="nx">input</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="o">--</span><span class="nx">i</span><span class="p">),</span>
-                <span class="nx">next</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-                <span class="nx">carry</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
-
-            <span class="k">if</span> <span class="p">(</span><span class="nb">isNaN</span><span class="p">(</span><span class="nx">last</span><span class="p">))</span> <span class="p">{</span>
-                <span class="nx">index</span> <span class="o">=</span> <span class="nx">alphabet</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">last</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">());</span>
-
-                <span class="k">if</span> <span class="p">(</span><span class="nx">index</span> <span class="o">===</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="nx">next</span> <span class="o">=</span> <span class="nx">last</span><span class="p">;</span>
-                    <span class="nx">carry</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-                <span class="p">}</span>
-                <span class="k">else</span> <span class="p">{</span>
-                    <span class="kd">var</span> <span class="nx">isUpperCase</span> <span class="o">=</span> <span class="nx">last</span> <span class="o">===</span> <span class="nx">last</span><span class="p">.</span><span class="nx">toUpperCase</span><span class="p">();</span>
-                    <span class="nx">next</span> <span class="o">=</span> <span class="nx">alphabet</span><span class="p">.</span><span class="nx">charAt</span><span class="p">((</span><span class="nx">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="nx">length</span><span class="p">);</span>
-                    <span class="k">if</span> <span class="p">(</span><span class="nx">isUpperCase</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="nx">next</span> <span class="o">=</span> <span class="nx">next</span><span class="p">.</span><span class="nx">toUpperCase</span><span class="p">();</span>
-                    <span class="p">}</span>
-
-                    <span class="nx">carry</span> <span class="o">=</span> <span class="nx">index</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&gt;=</span> <span class="nx">length</span><span class="p">;</span>
-                    <span class="k">if</span> <span class="p">(</span><span class="nx">carry</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="kd">var</span> <span class="nx">added</span> <span class="o">=</span> <span class="nx">isUpperCase</span> <span class="o">?</span> <span class="s1">&#39;A&#39;</span> <span class="o">:</span> <span class="s1">&#39;a&#39;</span><span class="p">;</span>
-                        <span class="nx">result</span> <span class="o">=</span> <span class="nx">added</span> <span class="o">+</span> <span class="nx">next</span> <span class="o">+</span> <span class="nx">result</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-                        <span class="k">break</span><span class="p">;</span>
-                    <span class="p">}</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-            <span class="k">else</span> <span class="p">{</span>
-                <span class="nx">next</span> <span class="o">=</span> <span class="o">+</span><span class="nx">last</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-                <span class="k">if</span><span class="p">(</span><span class="nx">next</span> <span class="o">&gt;</span> <span class="mi">9</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="nx">next</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-                    <span class="nx">carry</span> <span class="o">=</span> <span class="kc">true</span>
-                <span class="p">}</span>
-
-                <span class="k">if</span> <span class="p">(</span><span class="nx">carry</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="nx">result</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span> <span class="o">+</span> <span class="nx">next</span> <span class="o">+</span> <span class="nx">result</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-                    <span class="k">break</span><span class="p">;</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-
-            <span class="nx">result</span> <span class="o">=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="o">+</span> <span class="nx">next</span> <span class="o">+</span> <span class="nx">result</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
-            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">carry</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">break</span><span class="p">;</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
-    <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-32">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-32">&#182;</a>               </div>               <p>Returns a unique guid of the specified length, or 32 by default</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">guid</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">guid</span><span class="p">(</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">buf</span> <span class="o">=</span> <span class="p">[],</span>
-            <span class="nx">chars</span> <span class="o">=</span> <span class="s1">&#39;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789&#39;</span><span class="p">,</span>
-            <span class="nx">charlen</span> <span class="o">=</span> <span class="nx">chars</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
-            <span class="nx">length</span> <span class="o">=</span> <span class="nx">length</span> <span class="o">||</span> <span class="mi">32</span><span class="p">;</span>
+            </div>
             
-        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">buf</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">chars</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="nx">charlen</span><span class="p">));</span>
-        <span class="p">}</span>
+            <div class="content"><div class='highlight'><pre>    slang.successor = <span class="function"><span class="keyword">function</span> <span class="title">successor</span><span class="params">(input)</span> {</span>
+        <span class="keyword">var</span> alphabet = <span class="string">'abcdefghijklmnopqrstuvwxyz'</span>,
+            length = alphabet.length,
+            result = input,
+            i = input.length;
+
+        <span class="keyword">while</span>(i &gt;= <span class="number">0</span>) {
+            <span class="keyword">var</span> last = input.charAt(--i),
+                next = <span class="string">''</span>,
+                carry = <span class="literal">false</span>;
+
+            <span class="keyword">if</span> (isNaN(last)) {
+                index = alphabet.indexOf(last.toLowerCase());
+
+                <span class="keyword">if</span> (index === -<span class="number">1</span>) {
+                    next = last;
+                    carry = <span class="literal">true</span>;
+                }
+                <span class="keyword">else</span> {
+                    <span class="keyword">var</span> isUpperCase = last === last.toUpperCase();
+                    next = alphabet.charAt((index + <span class="number">1</span>) % length);
+                    <span class="keyword">if</span> (isUpperCase) {
+                        next = next.toUpperCase();
+                    }
+
+                    carry = index + <span class="number">1</span> &gt;= length;
+                    <span class="keyword">if</span> (carry &amp;&amp; i === <span class="number">0</span>) {
+                        <span class="keyword">var</span> added = isUpperCase ? <span class="string">'A'</span> : <span class="string">'a'</span>;
+                        result = added + next + result.slice(<span class="number">1</span>);
+                        <span class="keyword">break</span>;
+                    }
+                }
+            }
+            <span class="keyword">else</span> {
+                next = +last + <span class="number">1</span>;
+                <span class="keyword">if</span>(next &gt; <span class="number">9</span>) {
+                    next = <span class="number">0</span>;
+                    carry = <span class="literal">true</span>
+                }
+
+                <span class="keyword">if</span> (carry &amp;&amp; i === <span class="number">0</span>) {
+                    result = <span class="string">'1'</span> + next + result.slice(<span class="number">1</span>);
+                    <span class="keyword">break</span>;
+                }
+            }
+
+            result = result.slice(<span class="number">0</span>, i) + next + result.slice(i + <span class="number">1</span>);
+            <span class="keyword">if</span> (!carry) {
+                <span class="keyword">break</span>;
+            }
+        }
+        <span class="keyword">return</span> result;
+    }</pre></div></div>
+            
+        </li>
         
-        <span class="k">return</span> <span class="nx">buf</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
-    <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-33">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-33">&#182;</a>               </div>               <h2>Inflection</h2>             </td>             <td class="code">               <div class="highlight"><pre>    </pre></div>             </td>           </tr>                               <tr id="section-34">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-34">&#182;</a>               </div>               <p>Set default language for inflection methods</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">lang</span> <span class="o">=</span> <span class="s1">&#39;en&#39;</span><span class="p">;</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-35">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-35">&#182;</a>               </div>               <p>Object to hold languages for inflection
-Add slang.Language objects to this</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">languages</span> <span class="o">=</span> <span class="p">{};</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-36">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-36">&#182;</a>               </div>               <p>Define object to hold information about a language</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="kd">function</span> <span class="nx">Language</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">plural</span> <span class="o">=</span> <span class="p">[];</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">singular</span> <span class="o">=</span> <span class="p">[];</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">uncountable</span> <span class="o">=</span> <span class="p">[];</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">irregular</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="nx">plural</span><span class="o">:</span> <span class="p">{},</span>
-            <span class="nx">singular</span><span class="o">:</span> <span class="p">{}</span>
-        <span class="p">};</span>
-    <span class="p">}</span>
+        
+        <li id="section-36">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-36">&#182;</a>
+              </div>
+              <p>Returns a unique guid of the specified length, or 32 by default</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.guid = <span class="function"><span class="keyword">function</span> <span class="title">guid</span><span class="params">(length)</span> {</span>
+        <span class="keyword">var</span> buf = [],
+            chars = <span class="string">'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'</span>,
+            charlen = chars.length,
+            length = length || <span class="number">32</span>;
+            
+        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; length; i++) {
+            buf[i] = chars.charAt(Math.floor(Math.random() * charlen));
+        }
+        
+        <span class="keyword">return</span> buf.join(<span class="string">''</span>);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-37">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-37">&#182;</a>
+              </div>
+              <h2>Inflection</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-38">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-38">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-39">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-39">&#182;</a>
+              </div>
+              <p>Set default language for inflection methods</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.lang = <span class="string">'en'</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-40">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-40">&#182;</a>
+              </div>
+              <p>Object to hold languages for inflection
+Add slang.Language objects to this</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.languages = {};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-41">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-41">&#182;</a>
+              </div>
+              <p>Define object to hold information about a language</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="function"><span class="keyword">function</span> <span class="title">Language</span><span class="params">()</span> {</span>
+        <span class="keyword">this</span>.plural = [];
+        <span class="keyword">this</span>.singular = [];
+        <span class="keyword">this</span>.uncountable = [];
+        <span class="keyword">this</span>.irregular = {
+            plural: {},
+            singular: {}
+        };
+    }
     
-    <span class="nx">slang</span><span class="p">.</span><span class="nx">Language</span> <span class="o">=</span> <span class="nx">Language</span><span class="p">;</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-37">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-37">&#182;</a>               </div>               <p>Adds an array of irregular words to the language.
+    slang.Language = Language;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-42">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-42">&#182;</a>
+              </div>
+              <p>Adds an array of irregular words to the language.
 Provide an array of arrays containing the singular
-and plural versions of the word</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">Language</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">addIrregular</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">irregular</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">len</span> <span class="o">=</span> <span class="nx">irregular</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">len</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">item</span> <span class="o">=</span> <span class="nx">irregular</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
-            <span class="k">this</span><span class="p">.</span><span class="nx">irregular</span><span class="p">.</span><span class="nx">plural</span><span class="p">[</span><span class="nx">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="nx">item</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
-            <span class="k">this</span><span class="p">.</span><span class="nx">irregular</span><span class="p">.</span><span class="nx">singular</span><span class="p">[</span><span class="nx">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="nx">item</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-38">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-38">&#182;</a>               </div>               <p>Inflects a word by the specified type ('singular' or 'plural')</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">Language</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">inflect</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">word</span><span class="p">,</span> <span class="nx">type</span><span class="p">)</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-39">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-39">&#182;</a>               </div>               <p>Check if this word is uncountable</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="k">if</span> <span class="p">(</span><span class="o">~</span><span class="k">this</span><span class="p">.</span><span class="nx">uncountable</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">word</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()))</span>
-            <span class="k">return</span> <span class="nx">word</span><span class="p">;</span>
-        </pre></div>             </td>           </tr>                               <tr id="section-40">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-40">&#182;</a>               </div>               <p>Check if this word is irregular</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="kd">var</span> <span class="nx">irregular</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">irregular</span><span class="p">[</span><span class="nx">type</span><span class="p">][</span><span class="nx">word</span><span class="p">];</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">irregular</span><span class="p">)</span>
-            <span class="k">return</span> <span class="nx">irregular</span><span class="p">;</span>
-        </pre></div>             </td>           </tr>                               <tr id="section-41">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-41">&#182;</a>               </div>               <p>Check rules until a match is found</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="kd">var</span> <span class="nx">rules</span> <span class="o">=</span> <span class="k">this</span><span class="p">[</span><span class="nx">type</span><span class="p">];</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">len</span> <span class="o">=</span> <span class="nx">rules</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">len</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">regexp</span> <span class="o">=</span> <span class="nx">rules</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">regexp</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">word</span><span class="p">))</span>
-                <span class="k">return</span> <span class="nx">word</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">regexp</span><span class="p">,</span> <span class="nx">rules</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]);</span>
-        <span class="p">}</span>
-        
-        <span class="k">return</span> <span class="nx">word</span><span class="p">;</span>
-    <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-42">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-42">&#182;</a>               </div>               <p>Pluralize a word in the specified language
-or <code>slang.lang</code> by default</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">pluralize</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">word</span><span class="p">,</span> <span class="nx">lang</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">lang</span> <span class="o">||</span> <span class="p">(</span><span class="nx">lang</span> <span class="o">=</span> <span class="nx">slang</span><span class="p">.</span><span class="nx">lang</span><span class="p">);</span>
-        <span class="nx">lang</span> <span class="o">=</span> <span class="nx">slang</span><span class="p">.</span><span class="nx">languages</span><span class="p">[</span><span class="nx">lang</span><span class="p">];</span>
-        
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">lang</span><span class="p">)</span>
-            <span class="k">return</span> <span class="nx">word</span><span class="p">;</span>
-        
-        <span class="k">return</span> <span class="nx">lang</span><span class="p">.</span><span class="nx">inflect</span><span class="p">(</span><span class="nx">word</span><span class="p">,</span> <span class="s1">&#39;plural&#39;</span><span class="p">);</span>
-    <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-43">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-43">&#182;</a>               </div>               <p>Singularize a word in the specified language
-or <code>slang.lang</code> by default</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">singularize</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">word</span><span class="p">,</span> <span class="nx">lang</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">lang</span> <span class="o">||</span> <span class="p">(</span><span class="nx">lang</span> <span class="o">=</span> <span class="nx">slang</span><span class="p">.</span><span class="nx">lang</span><span class="p">);</span>
-        <span class="nx">lang</span> <span class="o">=</span> <span class="nx">slang</span><span class="p">.</span><span class="nx">languages</span><span class="p">[</span><span class="nx">lang</span><span class="p">];</span>
-        
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">lang</span><span class="p">)</span>
-            <span class="k">return</span> <span class="nx">word</span><span class="p">;</span>
+and plural versions of the word</p>
+
+            </div>
             
-        <span class="k">return</span> <span class="nx">lang</span><span class="p">.</span><span class="nx">inflect</span><span class="p">(</span><span class="nx">word</span><span class="p">,</span> <span class="s1">&#39;singular&#39;</span><span class="p">);</span>
-    <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-44">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-44">&#182;</a>               </div>               <p>Adds the methods from the slang object to String.prototype</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">slang</span><span class="p">.</span><span class="nx">addToPrototype</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">addToPrototype</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">for</span> <span class="p">(</span><span class="nx">key</span> <span class="k">in</span> <span class="nx">slang</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">key</span> <span class="o">===</span> <span class="s1">&#39;guid&#39;</span> <span class="o">||</span> 
-                <span class="nx">key</span> <span class="o">===</span> <span class="s1">&#39;lang&#39;</span> <span class="o">||</span>
-                <span class="nx">key</span> <span class="o">===</span> <span class="s1">&#39;languages&#39;</span> <span class="o">||</span>
-                <span class="nx">key</span> <span class="o">===</span> <span class="s1">&#39;Language&#39;</span> <span class="o">||</span>
-                <span class="nx">key</span> <span class="o">===</span> <span class="s1">&#39;humanize&#39;</span> <span class="o">||</span>
-                <span class="nx">key</span> <span class="o">===</span> <span class="s1">&#39;isString&#39;</span> <span class="o">||</span> 
-                <span class="nx">key</span> <span class="o">===</span> <span class="s1">&#39;version&#39;</span> <span class="o">||</span> 
-                <span class="nx">key</span> <span class="o">===</span> <span class="s1">&#39;addToPrototype&#39;</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="k">continue</span><span class="p">;</span>
-            <span class="p">}</span>
+            <div class="content"><div class='highlight'><pre>    Language.prototype.addIrregular = <span class="keyword">function</span>(irregular) {
+        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = irregular.length; i &lt; len; i++) {
+            <span class="keyword">var</span> item = irregular[i];
+            <span class="keyword">this</span>.irregular.plural[item[<span class="number">0</span>]] = item[<span class="number">1</span>];
+            <span class="keyword">this</span>.irregular.singular[item[<span class="number">1</span>]] = item[<span class="number">0</span>];
+        }
+    }</pre></div></div>
             
-            <span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nb">String</span><span class="p">.</span><span class="nx">prototype</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-                    <span class="kd">var</span> <span class="nx">args</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="p">)</span>
-                    <span class="k">return</span> <span class="nx">slang</span><span class="p">[</span><span class="nx">key</span><span class="p">].</span><span class="nx">apply</span><span class="p">(</span><span class="nx">slang</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">].</span><span class="nx">concat</span><span class="p">(</span><span class="nx">args</span><span class="p">));</span>
-                <span class="p">}</span>
-            <span class="p">})(</span><span class="nx">key</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-45">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-45">&#182;</a>               </div>               <h2>English Inflector</h2>             </td>             <td class="code">               <div class="highlight"><pre>    </pre></div>             </td>           </tr>                               <tr id="section-46">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-46">&#182;</a>               </div>               <p>Define language for English</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="kd">var</span> <span class="nx">en</span> <span class="o">=</span> <span class="nx">slang</span><span class="p">.</span><span class="nx">languages</span><span class="p">[</span><span class="s1">&#39;en&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">slang</span><span class="p">.</span><span class="nx">Language</span><span class="p">();</span>
+        </li>
+        
+        
+        <li id="section-43">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-43">&#182;</a>
+              </div>
+              <p>Inflects a word by the specified type (&#39;singular&#39; or &#39;plural&#39;)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    Language.prototype.inflect = <span class="keyword">function</span>(word, type) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-44">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-44">&#182;</a>
+              </div>
+              <p>Check if this word is uncountable</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="keyword">if</span> (~<span class="keyword">this</span>.uncountable.indexOf(word.toLowerCase()))
+            <span class="keyword">return</span> word;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-45">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-45">&#182;</a>
+              </div>
+              <p>Check if this word is irregular</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="keyword">var</span> irregular = <span class="keyword">this</span>.irregular[type][word];
+        <span class="keyword">if</span> (irregular)
+            <span class="keyword">return</span> irregular;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-46">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-46">&#182;</a>
+              </div>
+              <p>Check rules until a match is found</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="keyword">var</span> rules = <span class="keyword">this</span>[type];
+        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = rules.length; i &lt; len; i++) {
+            <span class="keyword">var</span> regexp = rules[i][<span class="number">0</span>];
+            <span class="keyword">if</span> (regexp.test(word))
+                <span class="keyword">return</span> word.replace(regexp, rules[i][<span class="number">1</span>]);
+        }
+        
+        <span class="keyword">return</span> word;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-47">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-47">&#182;</a>
+              </div>
+              <p>Pluralize a word in the specified language
+or <code>slang.lang</code> by default</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.pluralize = <span class="keyword">function</span>(word, lang) {
+        lang || (lang = slang.lang);
+        lang = slang.languages[lang];
+        
+        <span class="keyword">if</span> (!lang)
+            <span class="keyword">return</span> word;
+        
+        <span class="keyword">return</span> lang.inflect(word, <span class="string">'plural'</span>);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-48">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-48">&#182;</a>
+              </div>
+              <p>Singularize a word in the specified language
+or <code>slang.lang</code> by default</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.singularize = <span class="keyword">function</span>(word, lang) {
+        lang || (lang = slang.lang);
+        lang = slang.languages[lang];
+        
+        <span class="keyword">if</span> (!lang)
+            <span class="keyword">return</span> word;
+            
+        <span class="keyword">return</span> lang.inflect(word, <span class="string">'singular'</span>);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-49">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-49">&#182;</a>
+              </div>
+              <p>Adds the methods from the slang object to String.prototype</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    slang.addToPrototype = <span class="function"><span class="keyword">function</span> <span class="title">addToPrototype</span><span class="params">()</span> {</span>
+        <span class="keyword">for</span> (key <span class="keyword">in</span> slang) {
+            <span class="keyword">if</span> (key === <span class="string">'guid'</span> || 
+                key === <span class="string">'lang'</span> ||
+                key === <span class="string">'languages'</span> ||
+                key === <span class="string">'Language'</span> ||
+                key === <span class="string">'humanize'</span> ||
+                key === <span class="string">'isString'</span> || 
+                key === <span class="string">'version'</span> || 
+                key === <span class="string">'addToPrototype'</span>) {
+                    <span class="keyword">continue</span>;
+            }
+            
+            (<span class="keyword">function</span>(key) {
+                String.prototype[key] = <span class="keyword">function</span>() {
+                    <span class="keyword">var</span> args = Array.prototype.slice.call(arguments)
+                    <span class="keyword">return</span> slang[key].apply(slang, [<span class="keyword">this</span>].concat(args));
+                }
+            })(key);
+        }
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-50">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-50">&#182;</a>
+              </div>
+              <h2>English Inflector</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-51">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-51">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-52">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-52">&#182;</a>
+              </div>
+              <p>Define language for English</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">var</span> en = slang.languages[<span class="string">'en'</span>] = <span class="keyword">new</span> slang.Language();
     
-    <span class="nx">en</span><span class="p">.</span><span class="nx">plural</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="p">[</span><span class="sr">/(todo)$/i</span><span class="p">,</span> <span class="s2">&quot;$1s&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/(matr|vert|ind)(?:ix|ex)$/i</span><span class="p">,</span> <span class="s2">&quot;$1ices&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/(octop|vir)us$/i</span><span class="p">,</span> <span class="s2">&quot;$1i&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/(alias|status)$/i</span><span class="p">,</span> <span class="s2">&quot;$1es&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/(cris|ax|test)is$/i</span><span class="p">,</span> <span class="s2">&quot;$1es&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/(s|ss|sh|ch|x|o)$/i</span><span class="p">,</span> <span class="s2">&quot;$1es&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/y$/i</span><span class="p">,</span> <span class="s2">&quot;ies&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/(o|e)y$/i</span><span class="p">,</span> <span class="s2">&quot;$1ys&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/([ti])um$/i</span><span class="p">,</span> <span class="s2">&quot;$1a&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/sis$/i</span><span class="p">,</span> <span class="s2">&quot;ses&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/(?:([^f])fe|([lr])f)$/i</span><span class="p">,</span> <span class="s2">&quot;$1$2ves&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/([^aeiouy]|qu)y$/i</span><span class="p">,</span> <span class="s2">&quot;$1ies&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/([m|l])ouse$/i</span><span class="p">,</span> <span class="s2">&quot;$1ice&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/^(ox)$/i</span><span class="p">,</span> <span class="s2">&quot;$1en&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/(quiz)$/i</span><span class="p">,</span> <span class="s2">&quot;$1zes&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/$/</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span><span class="p">]</span>
-    <span class="p">];</span>
+    en.plural = [
+        [<span class="regexp">/(todo)$/i</span>, <span class="string">"$1s"</span>],
+        [<span class="regexp">/(matr|vert|ind)(?:ix|ex)$/i</span>, <span class="string">"$1ices"</span>],
+        [<span class="regexp">/(octop|vir)us$/i</span>, <span class="string">"$1i"</span>],
+        [<span class="regexp">/(alias|status)$/i</span>, <span class="string">"$1es"</span>],
+        [<span class="regexp">/(cris|ax|test)is$/i</span>, <span class="string">"$1es"</span>],
+        [<span class="regexp">/(s|ss|sh|ch|x|o)$/i</span>, <span class="string">"$1es"</span>],
+        [<span class="regexp">/y$/i</span>, <span class="string">"ies"</span>],
+        [<span class="regexp">/(o|e)y$/i</span>, <span class="string">"$1ys"</span>],
+        [<span class="regexp">/([ti])um$/i</span>, <span class="string">"$1a"</span>],
+        [<span class="regexp">/sis$/i</span>, <span class="string">"ses"</span>],
+        [<span class="regexp">/(?:([^f])fe|([lr])f)$/i</span>, <span class="string">"$1$2ves"</span>],
+        [<span class="regexp">/([^aeiouy]|qu)y$/i</span>, <span class="string">"$1ies"</span>],
+        [<span class="regexp">/([m|l])ouse$/i</span>, <span class="string">"$1ice"</span>],
+        [<span class="regexp">/^(ox)$/i</span>, <span class="string">"$1en"</span>],
+        [<span class="regexp">/(quiz)$/i</span>, <span class="string">"$1zes"</span>],
+        [<span class="regexp">/$/</span>, <span class="string">"s"</span>]
+    ];
 
-    <span class="nx">en</span><span class="p">.</span><span class="nx">singular</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="p">[</span><span class="sr">/(bu|mis|kis)s$/i</span><span class="p">,</span> <span class="s2">&quot;$1s&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/([ti])a$/i</span><span class="p">,</span> <span class="s2">&quot;$1um&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$/i</span><span class="p">,</span> <span class="s2">&quot;$1$2sis&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/(^analy)ses$/i</span><span class="p">,</span> <span class="s2">&quot;$1sis&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/([^f])ves$/i</span><span class="p">,</span> <span class="s2">&quot;$1fe&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/([lr])ves$/i</span><span class="p">,</span> <span class="s2">&quot;$1f&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/([^aeiouy]|qu)ies$/i</span><span class="p">,</span> <span class="s2">&quot;$1y&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/ies$/i</span><span class="p">,</span> <span class="s2">&quot;ie&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/(x|ch|ss|sh)es$/i</span><span class="p">,</span> <span class="s2">&quot;$1&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/([m|l])ice$/i</span><span class="p">,</span> <span class="s2">&quot;$1ouse&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/(bus)es$/i</span><span class="p">,</span> <span class="s2">&quot;$1&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/(shoe)s$/i</span><span class="p">,</span> <span class="s2">&quot;$1&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/(o)es$/i</span><span class="p">,</span> <span class="s2">&quot;$1&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/(cris|ax|test)es$/i</span><span class="p">,</span> <span class="s2">&quot;$1is&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/(octop|vir)i$/i</span><span class="p">,</span> <span class="s2">&quot;$1us&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/(alias|status)es$/i</span><span class="p">,</span> <span class="s2">&quot;$1&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/^(ox)en/i</span><span class="p">,</span> <span class="s2">&quot;$1&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/(vert|ind)ices$/i</span><span class="p">,</span> <span class="s2">&quot;$1ex&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/(matr)ices$/i</span><span class="p">,</span> <span class="s2">&quot;$1ix&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/(quiz)zes$/i</span><span class="p">,</span> <span class="s2">&quot;$1&quot;</span><span class="p">],</span>
-        <span class="p">[</span><span class="sr">/s$/i</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">]</span>
-    <span class="p">];</span>
+    en.singular = [
+        [<span class="regexp">/(bu|mis|kis)s$/i</span>, <span class="string">"$1s"</span>],
+        [<span class="regexp">/([ti])a$/i</span>, <span class="string">"$1um"</span>],
+        [<span class="regexp">/((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$/i</span>, <span class="string">"$1$2sis"</span>],
+        [<span class="regexp">/(^analy)ses$/i</span>, <span class="string">"$1sis"</span>],
+        [<span class="regexp">/([^f])ves$/i</span>, <span class="string">"$1fe"</span>],
+        [<span class="regexp">/([lr])ves$/i</span>, <span class="string">"$1f"</span>],
+        [<span class="regexp">/([^aeiouy]|qu)ies$/i</span>, <span class="string">"$1y"</span>],
+        [<span class="regexp">/ies$/i</span>, <span class="string">"ie"</span>],
+        [<span class="regexp">/(x|ch|ss|sh)es$/i</span>, <span class="string">"$1"</span>],
+        [<span class="regexp">/([m|l])ice$/i</span>, <span class="string">"$1ouse"</span>],
+        [<span class="regexp">/(bus)es$/i</span>, <span class="string">"$1"</span>],
+        [<span class="regexp">/(shoe)s$/i</span>, <span class="string">"$1"</span>],
+        [<span class="regexp">/(o)es$/i</span>, <span class="string">"$1"</span>],
+        [<span class="regexp">/(cris|ax|test)es$/i</span>, <span class="string">"$1is"</span>],
+        [<span class="regexp">/(octop|vir)i$/i</span>, <span class="string">"$1us"</span>],
+        [<span class="regexp">/(alias|status)es$/i</span>, <span class="string">"$1"</span>],
+        [<span class="regexp">/^(ox)en/i</span>, <span class="string">"$1"</span>],
+        [<span class="regexp">/(vert|ind)ices$/i</span>, <span class="string">"$1ex"</span>],
+        [<span class="regexp">/(matr)ices$/i</span>, <span class="string">"$1ix"</span>],
+        [<span class="regexp">/(quiz)zes$/i</span>, <span class="string">"$1"</span>],
+        [<span class="regexp">/s$/i</span>, <span class="string">""</span>]
+    ];
 
-    <span class="nx">en</span><span class="p">.</span><span class="nx">addIrregular</span><span class="p">([</span>
-        <span class="p">[</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;we&#39;</span><span class="p">],</span>
-        <span class="p">[</span><span class="s1">&#39;person&#39;</span><span class="p">,</span> <span class="s1">&#39;people&#39;</span><span class="p">],</span>
-        <span class="p">[</span><span class="s1">&#39;man&#39;</span><span class="p">,</span> <span class="s1">&#39;men&#39;</span><span class="p">],</span>
-        <span class="p">[</span><span class="s1">&#39;child&#39;</span><span class="p">,</span> <span class="s1">&#39;children&#39;</span><span class="p">],</span>
-        <span class="p">[</span><span class="s1">&#39;move&#39;</span><span class="p">,</span> <span class="s1">&#39;moves&#39;</span><span class="p">],</span>
-        <span class="p">[</span><span class="s1">&#39;she&#39;</span><span class="p">,</span> <span class="s1">&#39;they&#39;</span><span class="p">],</span>
-        <span class="p">[</span><span class="s1">&#39;he&#39;</span><span class="p">,</span> <span class="s1">&#39;they&#39;</span><span class="p">],</span>
-        <span class="p">[</span><span class="s1">&#39;myself&#39;</span><span class="p">,</span> <span class="s1">&#39;ourselves&#39;</span><span class="p">],</span>
-        <span class="p">[</span><span class="s1">&#39;yourself&#39;</span><span class="p">,</span> <span class="s1">&#39;ourselves&#39;</span><span class="p">],</span>
-        <span class="p">[</span><span class="s1">&#39;himself&#39;</span><span class="p">,</span> <span class="s1">&#39;themselves&#39;</span><span class="p">],</span>
-        <span class="p">[</span><span class="s1">&#39;herself&#39;</span><span class="p">,</span> <span class="s1">&#39;themselves&#39;</span><span class="p">],</span>
-        <span class="p">[</span><span class="s1">&#39;themself&#39;</span><span class="p">,</span> <span class="s1">&#39;themselves&#39;</span><span class="p">],</span>
-        <span class="p">[</span><span class="s1">&#39;mine&#39;</span><span class="p">,</span> <span class="s1">&#39;ours&#39;</span><span class="p">],</span>
-        <span class="p">[</span><span class="s1">&#39;hers&#39;</span><span class="p">,</span> <span class="s1">&#39;theirs&#39;</span><span class="p">],</span>
-        <span class="p">[</span><span class="s1">&#39;his&#39;</span><span class="p">,</span> <span class="s1">&#39;theirs&#39;</span><span class="p">],</span>
-        <span class="p">[</span><span class="s1">&#39;its&#39;</span><span class="p">,</span> <span class="s1">&#39;theirs&#39;</span><span class="p">],</span>
-        <span class="p">[</span><span class="s1">&#39;theirs&#39;</span><span class="p">,</span> <span class="s1">&#39;theirs&#39;</span><span class="p">],</span>
-        <span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">,</span> <span class="s1">&#39;sexes&#39;</span><span class="p">],</span>
-        <span class="p">[</span><span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;that&#39;</span><span class="p">]</span>
-    <span class="p">]);</span>
+    en.addIrregular([
+        [<span class="string">'i'</span>, <span class="string">'we'</span>],
+        [<span class="string">'person'</span>, <span class="string">'people'</span>],
+        [<span class="string">'man'</span>, <span class="string">'men'</span>],
+        [<span class="string">'child'</span>, <span class="string">'children'</span>],
+        [<span class="string">'move'</span>, <span class="string">'moves'</span>],
+        [<span class="string">'she'</span>, <span class="string">'they'</span>],
+        [<span class="string">'he'</span>, <span class="string">'they'</span>],
+        [<span class="string">'myself'</span>, <span class="string">'ourselves'</span>],
+        [<span class="string">'yourself'</span>, <span class="string">'ourselves'</span>],
+        [<span class="string">'himself'</span>, <span class="string">'themselves'</span>],
+        [<span class="string">'herself'</span>, <span class="string">'themselves'</span>],
+        [<span class="string">'themself'</span>, <span class="string">'themselves'</span>],
+        [<span class="string">'mine'</span>, <span class="string">'ours'</span>],
+        [<span class="string">'hers'</span>, <span class="string">'theirs'</span>],
+        [<span class="string">'his'</span>, <span class="string">'theirs'</span>],
+        [<span class="string">'its'</span>, <span class="string">'theirs'</span>],
+        [<span class="string">'theirs'</span>, <span class="string">'theirs'</span>],
+        [<span class="string">'sex'</span>, <span class="string">'sexes'</span>],
+        [<span class="string">'this'</span>, <span class="string">'that'</span>]
+    ]);
 
-    <span class="nx">en</span><span class="p">.</span><span class="nx">uncountable</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;advice&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;enegery&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;excretion&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;digestion&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;cooperation&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;health&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;justice&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;jeans&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;labour&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;machinery&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;equipment&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;information&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;pollution&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;sewage&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;paper&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;money&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;species&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;series&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;rain&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;rice&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;fish&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;sheep&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;moose&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;deer&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;bison&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;proceedings&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;shears&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;pincers&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;breeches&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;hijinks&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;clippers&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;chassis&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;innings&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;elk&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;rhinoceros&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;swine&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;you&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;news&#39;</span>
-    <span class="p">];</span>
+    en.uncountable = [
+        <span class="string">'advice'</span>,
+        <span class="string">'enegery'</span>,
+        <span class="string">'excretion'</span>,
+        <span class="string">'digestion'</span>,
+        <span class="string">'cooperation'</span>,
+        <span class="string">'health'</span>,
+        <span class="string">'justice'</span>,
+        <span class="string">'jeans'</span>,
+        <span class="string">'labour'</span>,
+        <span class="string">'machinery'</span>,
+        <span class="string">'equipment'</span>,
+        <span class="string">'information'</span>,
+        <span class="string">'pollution'</span>,
+        <span class="string">'sewage'</span>,
+        <span class="string">'paper'</span>,
+        <span class="string">'money'</span>,
+        <span class="string">'species'</span>,
+        <span class="string">'series'</span>,
+        <span class="string">'rain'</span>,
+        <span class="string">'rice'</span>,
+        <span class="string">'fish'</span>,
+        <span class="string">'sheep'</span>,
+        <span class="string">'moose'</span>,
+        <span class="string">'deer'</span>,
+        <span class="string">'bison'</span>,
+        <span class="string">'proceedings'</span>,
+        <span class="string">'shears'</span>,
+        <span class="string">'pincers'</span>,
+        <span class="string">'breeches'</span>,
+        <span class="string">'hijinks'</span>,
+        <span class="string">'clippers'</span>,
+        <span class="string">'chassis'</span>,
+        <span class="string">'innings'</span>,
+        <span class="string">'elk'</span>,
+        <span class="string">'rhinoceros'</span>,
+        <span class="string">'swine'</span>,
+        <span class="string">'you'</span>,
+        <span class="string">'news'</span>
+    ];
 
-<span class="p">})();</span>
-
-</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
+})();</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
