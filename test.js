@@ -7,7 +7,12 @@ assert.equal(false, slang.isString(true), 'slang.isString failed.');
 
 // Test **slang.partition**
 assert.equal(3, slang.partition('Hello world!', 3)[0].length);
-assert.equal('Hello world!', slang.partition('Hello world!', 3).join(''));
+assert.deepEqual(["H", "e", "l", "l", "o", " ", "w", "o", "r", "l", "d", "!"], slang.partition('Hello world!', 0));
+assert.deepEqual(["Hel", "lo ", "wor", "ld!"], slang.partition('Hello world!', 3));      //even-n-chars, odd nblock
+assert.deepEqual(["<-", "He", "ll", "o-", " *", "wo", "rl", "d*", "!"], slang.partition('<-Hello- *world*!', 2)); //odd-n-chars, even nblock
+assert.deepEqual(["Hello world!"], slang.partition('Hello world!', 'Hello world!'.length));
+assert.deepEqual(["Hello world!"], slang.partition('Hello world!', .5));
+
 
 // Test **slang.repartition**
 assert.equal('Hel@lo @wor@ld!', slang.repartition('Hello world!'));
