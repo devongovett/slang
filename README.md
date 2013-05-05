@@ -16,7 +16,17 @@ Returns whether `input` is a string
 
     slang.isString('testing'); // true
     slang.isString(543);       // false
+
+### slang.partition
+Partitions a string into blocks of n characters
+
+    slang.partition('Hello world!', 3); // ["Hel", "lo ", "wor", "ld!"]
     
+### slang.reparition
+Partitions a string and subsequently joins all parts
+
+    slang.reparition('Hello world!', 3, '@'); // "Hel@lo @wor@ld!"
+        
 ### slang.capitalize
 Capitalizes the first character of a string
 

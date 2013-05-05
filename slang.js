@@ -14,7 +14,7 @@
     }
     
     // Set the slang version
-    slang.version = '0.2.0';
+    slang.version = '0.2.1';
     
     // String utility functions
     // ------------------------
@@ -24,6 +24,22 @@
         return Object.prototype.toString.call(input) === '[object String]';
     }
     
+    // Partitions a string `input` into blocks of `nblock` characters  
+    // See also: https://gist.github.com/lsauer/2759399
+    slang.partition = function partition(input, nblock) {
+        var arr = input.split(RegExp("(.{"+nblock+"})","gm"));
+        for(var i=0, arrnonempty=[];i<arr.length;i++) {
+          if( Boolean(arr[i]) ) { arrnonempty.push(arr[i]); }
+        }
+        return arrnonempty;
+    }
+    
+    // Partitions a string `input` into blocks of `nblock` characters and subsequently joins all parts
+    slang.repartition = function repartition(input, nblock, concat) {
+        var arrnonempty = slang.partition(input, nblock);
+        return arrnonempty.join(concat);
+    }
+        
     // Capitalizes the first character of a string
     slang.capitalize = function capitalize(input) {
         return input.charAt(0).toUpperCase() + input.slice(1);
