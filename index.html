@@ -157,12 +157,16 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
-              <p>Partitions a string into blocks of n characters<br>See also: <a href="https://gist.github.com/lsauer/2759399">https://gist.github.com/lsauer/2759399</a></p>
+              <p>Partitions a string <code>input</code> into blocks of <code>nblock</code> characters<br>See also: <a href="https://gist.github.com/lsauer/2759399">https://gist.github.com/lsauer/2759399</a></p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>    slang.partition = <span class="function"><span class="keyword">function</span> <span class="title">partition</span><span class="params">(input, nblock)</span> {</span>
-        <span class="keyword">return</span> input.split(RegExp(<span class="string">"(.{"</span>+nblock+<span class="string">"})"</span>,<span class="string">"gm"</span>)).filter(Boolean);
+        <span class="keyword">var</span> arr = input.split(RegExp(<span class="string">"(.{"</span>+nblock+<span class="string">"})"</span>,<span class="string">"gm"</span>));
+        <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>, arrnonempty=[];i&lt;arr.length;i++) {
+          <span class="keyword">if</span>( Boolean(arr[i]) ) { arrnonempty.push(arr[i]); }
+        }
+        <span class="keyword">return</span> arrnonempty;
     }</pre></div></div>
             
         </li>
@@ -174,12 +178,13 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
-              <p>Partitions a string and subsequently joins all parts</p>
+              <p>Partitions a string <code>input</code> into blocks of <code>nblock</code> characters and subsequently joins all parts</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>    slang.repartition = <span class="function"><span class="keyword">function</span> <span class="title">repartition</span><span class="params">(input, nblock, concat)</span> {</span>
-        <span class="keyword">return</span> input.split(RegExp(<span class="string">"(.{"</span>+nblock+<span class="string">"})"</span>,<span class="string">"gm"</span>)).filter(Boolean).join(concat);
+        <span class="keyword">var</span> arrnonempty = slang.partition(input, nblock);
+        <span class="keyword">return</span> arrnonempty.join(concat);
     }</pre></div></div>
             
         </li>
