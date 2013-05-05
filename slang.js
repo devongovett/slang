@@ -24,15 +24,20 @@
         return Object.prototype.toString.call(input) === '[object String]';
     }
     
-    // Partitions a string into blocks of n characters  
+    // Partitions a string `input` into blocks of `nblock` characters  
     // See also: https://gist.github.com/lsauer/2759399
     slang.partition = function partition(input, nblock) {
-        return input.split(RegExp("(.{"+nblock+"})","gm")).filter(Boolean);
+        var arr = input.split(RegExp("(.{"+nblock+"})","gm"));
+        for(var i=0, arrnonempty=[];i<arr.length;i++) {
+          if( Boolean(arr[i]) ) { arrnonempty.push(arr[i]); }
+        }
+        return arrnonempty;
     }
     
-    // Partitions a string and subsequently joins all parts
+    // Partitions a string `input` into blocks of `nblock` characters and subsequently joins all parts
     slang.repartition = function repartition(input, nblock, concat) {
-        return input.split(RegExp("(.{"+nblock+"})","gm")).filter(Boolean).join(concat);
+        var arrnonempty = slang.partition(input, nblock);
+        return arrnonempty.join(concat);
     }
         
     // Capitalizes the first character of a string
