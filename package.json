@@ -1,7 +1,7 @@
 {
   "name": "slang",
   "description": "A collection of utility functions for strings",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": {
       "name": "Devon Govett",
       "email": "devongovett@gmail.com",
