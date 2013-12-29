@@ -32,6 +32,10 @@ assert.equal('aaBBccDD', slang.swapcase('AAbbCCdd'));
 assert.equal('camelCase', slang.camelize('camel case'));
 assert.equal('camelCase', slang.camelize('camel-case'));
 
+// Test **slang.uncamelize**
+assert.equal('Camel Case', slang.uncamelize('CamelCase'));
+assert.equal('camel Case', slang.uncamelize('camelCase'));
+
 // Test **slang.dasherize**
 assert.equal('this-is-dashed', slang.dasherize('this is dashed'));
 assert.equal('this-is-dashed', slang.dasherize('thisIsDashed'));
