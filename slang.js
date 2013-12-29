@@ -14,7 +14,7 @@
     }
     
     // Set the slang version
-    slang.version = '0.2.0';
+    slang.version = '0.3.0';
     
     // String utility functions
     // ------------------------
