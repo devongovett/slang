@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>slang.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="page">
+
+      <div class="header">
+        
+          <h1>slang.js</h1>
+        
+
+        
+      </div>
+
+      
+        
+        
+        
+          <div class='highlight'><pre>(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span></pre></div>
+        
+      
+        
+        <h2 id="module-setup">Module Setup</h2>
+
+        
+      
+        
+        
+        
+      
+        
+        <p>Define the internal slang variable</p>
+
+        
+          <div class='highlight'><pre>    <span class="keyword">var</span> slang = {};</pre></div>
+        
+      
+        
+        <p>Export the slang object as either a CommonJS module, or to the global object</p>
+
+        
+          <div class='highlight'><pre>    <span class="keyword">if</span> (<span class="keyword">typeof</span> module !== <span class="string">'undefined'</span> &amp;&amp; module.exports) {
+        module.exports = slang;
+    } <span class="keyword">else</span> {
+        <span class="keyword">this</span>.slang = slang;
+    }</pre></div>
+        
+      
+        
+        <p>Set the slang version</p>
+
+        
+          <div class='highlight'><pre>    slang.version = <span class="string">'0.2.0'</span>;</pre></div>
+        
+      
+        
+        <h2 id="string-utility-functions">String utility functions</h2>
+
+        
+      
+        
+        
+        
+      
+        
+        <p>Returns whether <code>input</code> is a string</p>
+
+        
+          <div class='highlight'><pre>    slang.isString = <span class="function"><span class="keyword">function</span> <span class="title">isString</span><span class="params">(input)</span> {</span>
+        <span class="keyword">return</span> Object.prototype.toString.call(input) === <span class="string">'[object String]'</span>;
+    }</pre></div>
+        
+      
+        
+        <p>Capitalizes the first character of a string</p>
+
+        
+          <div class='highlight'><pre>    slang.capitalize = <span class="function"><span class="keyword">function</span> <span class="title">capitalize</span><span class="params">(input)</span> {</span>
+        <span class="keyword">return</span> input.charAt(<span class="number">0</span>).toUpperCase() + input.slice(<span class="number">1</span>);
+    }</pre></div>
+        
+      
+        
+        <p>Uncapitalizes the first character of a string</p>
+
+        
+          <div class='highlight'><pre>    slang.uncapitalize = <span class="function"><span class="keyword">function</span> <span class="title">uncapitalize</span><span class="params">(input)</span> {</span>
+        <span class="keyword">return</span> input.charAt(<span class="number">0</span>).toLowerCase() + input.slice(<span class="number">1</span>);
+    }</pre></div>
+        
+      
+        
+        <p>Capitalizes each word in the string</p>
+
+        
+          <div class='highlight'><pre>    slang.capitalizeWords = <span class="function"><span class="keyword">function</span> <span class="title">capitalizeWords</span><span class="params">(input)</span> {</span>
+        <span class="keyword">return</span> input.replace(<span class="regexp">/\w+/g</span>, <span class="function"><span class="keyword">function</span><span class="params">(word)</span> {</span>
+            <span class="keyword">return</span> slang.capitalize(word);
+        });
+    }</pre></div>
+        
+      
+        
+        <p>Uncapitalizes each word in the string</p>
+
+        
+          <div class='highlight'><pre>    slang.uncapitalizeWords = <span class="function"><span class="keyword">function</span> <span class="title">uncapitalizeWords</span><span class="params">(input)</span> {</span>
+        <span class="keyword">return</span> input.replace(<span class="regexp">/\w+/g</span>, <span class="function"><span class="keyword">function</span><span class="params">(word)</span> {</span>
+            <span class="keyword">return</span> slang.uncapitalize(word);
+        });
+    }</pre></div>
+        
+      
+        
+        <p>Returns whether the character at the provided character index
+is upper case.</p>
+
+        
+          <div class='highlight'><pre>    slang.isUpperCaseAt = <span class="function"><span class="keyword">function</span> <span class="title">isUpperCaseAt</span><span class="params">(input, index)</span> {</span>
+        <span class="keyword">return</span> input.charAt(index).toUpperCase() === input.charAt(index);
+    }</pre></div>
+        
+      
+        
+        <p>Returns whether the character at the provided character index
+is lower case.</p>
+
+        
+          <div class='highlight'><pre>    slang.isLowerCaseAt = <span class="function"><span class="keyword">function</span> <span class="title">isLowerCaseAt</span><span class="params">(input, index)</span> {</span>
+        <span class="keyword">return</span> input.charAt(index).toLowerCase() === input.charAt(index);
+    }</pre></div>
+        
+      
+        
+        <p>Inverts the case for each letter in the string</p>
+
+        
+          <div class='highlight'><pre>    slang.swapcase = <span class="function"><span class="keyword">function</span> <span class="title">swapcase</span><span class="params">(input)</span> {</span>
+        <span class="keyword">return</span> input.replace(<span class="regexp">/([a-z]+)|([A-Z]+)/g</span>, <span class="function"><span class="keyword">function</span><span class="params">(match, lower, upper)</span> {</span>
+            <span class="keyword">return</span> lower ? match.toUpperCase() : match.toLowerCase();
+        });
+    }</pre></div>
+        
+      
+        
+        <p>Converts a string of words seperated by dashes or spaces to camelCase</p>
+
+        
+          <div class='highlight'><pre>    slang.camelize = <span class="function"><span class="keyword">function</span> <span class="title">camelize</span><span class="params">(input)</span> {</span>
+        <span class="keyword">return</span> input.replace(<span class="regexp">/\W+(.)/g</span>, <span class="function"><span class="keyword">function</span><span class="params">(match, letter)</span> {</span>
+            <span class="keyword">return</span> letter.toUpperCase();
+        });
+    }</pre></div>
+        
+      
+        
+        <p>Converts a camelCased string into a series of words separated
+by <code>separator</code> or a space by default</p>
+
+        
+          <div class='highlight'><pre>    slang.uncamelize = <span class="function"><span class="keyword">function</span> <span class="title">uncamelize</span><span class="params">(input, separator)</span> {</span>
+        <span class="keyword">return</span> input.replace(<span class="regexp">/([a-z\d])([A-Z])/g</span>, <span class="string">'$1'</span> + (separator || <span class="string">' '</span>) + <span class="string">'$2'</span>);
+    }</pre></div>
+        
+      
+        
+        <p>Converts a string of words or a camelCased string into a series of words
+separated by a dash (<code>-</code>)</p>
+
+        
+          <div class='highlight'><pre>    slang.dasherize = <span class="function"><span class="keyword">function</span> <span class="title">dasherize</span><span class="params">(input)</span> {</span>
+        <span class="keyword">return</span> input.replace(<span class="regexp">/\W+/g</span>, <span class="string">'-'</span>)
+                    .replace(<span class="regexp">/([a-z\d])([A-Z])/g</span>, <span class="string">'$1-$2'</span>)
+                    .toLowerCase();
+    }</pre></div>
+        
+      
+        
+        <p>Concatenates the string <code>count</code> times</p>
+
+        
+          <div class='highlight'><pre>    slang.repeat = <span class="function"><span class="keyword">function</span> <span class="title">repeat</span><span class="params">(input, count)</span> {</span>
+        <span class="keyword">return</span> count &lt; <span class="number">1</span> ? <span class="string">''</span> : <span class="keyword">new</span> Array(count + <span class="number">1</span>).join(input);
+    }</pre></div>
+        
+      
+        
+        <p>Inserts <code>string</code> in <code>input</code> at <code>index</code></p>
+
+        
+          <div class='highlight'><pre>    slang.insert = <span class="function"><span class="keyword">function</span> <span class="title">insert</span><span class="params">(input, string, index)</span> {</span>
+        <span class="keyword">return</span> input.slice(<span class="number">0</span>, index) + string + input.slice(index);
+    }</pre></div>
+        
+      
+        
+        <p>Removes the characters between the <code>start</code> and <code>end</code> indexes</p>
+
+        
+          <div class='highlight'><pre>    slang.remove = <span class="function"><span class="keyword">function</span> <span class="title">remove</span><span class="params">(input, start, end)</span> {</span>
+        <span class="keyword">return</span> input.slice(<span class="number">0</span>, start) + input.slice(end);
+    }</pre></div>
+        
+      
+        
+        <p>Removes the last character of <code>input</code></p>
+
+        
+          <div class='highlight'><pre>    slang.chop = <span class="function"><span class="keyword">function</span> <span class="title">chop</span><span class="params">(input)</span> {</span>
+        <span class="keyword">return</span> input.slice(<span class="number">0</span>, -<span class="number">1</span>);
+    }</pre></div>
+        
+      
+        
+        <p>Removes leading and trailing whitespace from <code>input</code></p>
+
+        
+          <div class='highlight'><pre>    slang.trim = <span class="function"><span class="keyword">function</span> <span class="title">strip</span><span class="params">(input)</span> {</span>
+        <span class="keyword">return</span> input.trim ? input.trim() : input.replace(<span class="regexp">/^\s+/</span>, <span class="string">''</span>).replace(<span class="regexp">/\s+$/</span>, <span class="string">''</span>);
+    }</pre></div>
+        
+      
+        
+        <p>Removes the leading whitespace from <code>input</code></p>
+
+        
+          <div class='highlight'><pre>    slang.trimLeft = <span class="function"><span class="keyword">function</span> <span class="title">trimLeft</span><span class="params">(input)</span> {</span>
+        <span class="keyword">return</span> input.trimLeft ? input.trimLeft() : input.replace(<span class="regexp">/^\s+/</span>, <span class="string">''</span>);
+    }</pre></div>
+        
+      
+        
+        <p>Removes the trailing whitespace from <code>input</code></p>
+
+        
+          <div class='highlight'><pre>    slang.trimRight = <span class="function"><span class="keyword">function</span> <span class="title">trimRight</span><span class="params">(input)</span> {</span>
+        <span class="keyword">return</span> input.trimRight ? input.trimRight() : input.replace(<span class="regexp">/\s+$/</span>, <span class="string">''</span>);
+    }</pre></div>
+        
+      
+        
+        <p>Truncates <code>input</code> to <code>args.limit</code> or 10 and adds <code>args.omission</code> or &quot;...&quot;</p>
+
+        
+          <div class='highlight'><pre>    slang.truncate = <span class="function"><span class="keyword">function</span> <span class="title">truncate</span><span class="params">(input, args)</span> {</span>
+        <span class="keyword">var</span> limit = args &amp;&amp; args.limit || <span class="number">10</span>,
+            omission = args &amp;&amp; args.omission || <span class="string">'...'</span>;
+
+        <span class="keyword">return</span> input.length &lt;= limit ? input : input.slice(<span class="number">0</span>, limit) + omission;
+    }</pre></div>
+        
+      
+        
+        <p>Joins an array into a humanized list.  The last element is joined 
+by &quot;and&quot; by default, but you can change it.</p>
+
+        
+          <div class='highlight'><pre>    slang.join = <span class="function"><span class="keyword">function</span> <span class="title">join</span><span class="params">(array, last)</span> {</span>
+        <span class="keyword">var</span> lastItem = array.pop(),
+            last = last || <span class="string">'and'</span>;
+        
+        <span class="keyword">return</span> array.join(<span class="string">', '</span>) + <span class="string">' '</span> + last + <span class="string">' '</span> + lastItem;
+    }</pre></div>
+        
+      
+        
+        <p>Returns a humanized number with the correct suffix
+such as 1st, 2nd, 3rd or 4th</p>
+
+        
+          <div class='highlight'><pre>    slang.humanize = <span class="function"><span class="keyword">function</span> <span class="title">humanize</span><span class="params">(number)</span> {</span>
+        <span class="keyword">if</span>(number % <span class="number">100</span> &gt;= <span class="number">11</span> &amp;&amp; number % <span class="number">100</span> &lt;= <span class="number">13</span>)
+            <span class="keyword">return</span> number + <span class="string">"th"</span>;
+        
+        <span class="keyword">switch</span>(number % <span class="number">10</span>) {
+            <span class="keyword">case</span> <span class="number">1</span>: <span class="keyword">return</span> number + <span class="string">"st"</span>;
+            <span class="keyword">case</span> <span class="number">2</span>: <span class="keyword">return</span> number + <span class="string">"nd"</span>;
+            <span class="keyword">case</span> <span class="number">3</span>: <span class="keyword">return</span> number + <span class="string">"rd"</span>;
+        }
+        
+        <span class="keyword">return</span> number + <span class="string">"th"</span>;
+    }</pre></div>
+        
+      
+        
+        <p>Returns whether <code>input</code> contains <code>string</code></p>
+
+        
+          <div class='highlight'><pre>    slang.contains = <span class="function"><span class="keyword">function</span> <span class="title">contains</span><span class="params">(input, string)</span> {</span>
+        <span class="keyword">return</span> input.indexOf(string) &gt; -<span class="number">1</span>;
+    }</pre></div>
+        
+      
+        
+        <p>Returns whether <code>input</code> starts with <code>string</code></p>
+
+        
+          <div class='highlight'><pre>    slang.startsWith = <span class="function"><span class="keyword">function</span> <span class="title">startsWith</span><span class="params">(input, string)</span> {</span>
+        <span class="keyword">return</span> input.indexOf(string) === <span class="number">0</span>;
+    }</pre></div>
+        
+      
+        
+        <p>Returns whether <code>input</code> ends with <code>string</code></p>
+
+        
+          <div class='highlight'><pre>    slang.endsWith = <span class="function"><span class="keyword">function</span> <span class="title">endsWith</span><span class="params">(input, string)</span> {</span>
+        <span class="keyword">var</span> index = input.length - string.length;
+        <span class="keyword">return</span> index &gt;= <span class="number">0</span> &amp;&amp; input.indexOf(string, index) &gt; -<span class="number">1</span>;
+    }</pre></div>
+        
+      
+        
+        <p>Returns whether <code>input</code> is empty or only contains whitespace</p>
+
+        
+          <div class='highlight'><pre>    slang.isBlank = <span class="function"><span class="keyword">function</span> <span class="title">isBlank</span><span class="params">(input)</span> {</span>
+        <span class="keyword">return</span> <span class="regexp">/^\s*$/</span>.test(input);
+    }</pre></div>
+        
+      
+        
+        <p>Returns the successor to str. The successor is calculated by incrementing characters starting 
+from the rightmost alphanumeric (or the rightmost character if there are no alphanumerics) in the
+string. Incrementing a digit always results in another digit, and incrementing a letter results in
+another letter of the same case.</p>
+<p>If the increment generates a carry, the character to the left of it is incremented. This 
+process repeats until there is no carry, adding an additional character if necessary.</p>
+<pre><code>slang.successor(&quot;abcd&quot;)      == &quot;abce&quot;
+slang.successor(&quot;THX1138&quot;)   == &quot;THX1139&quot;
+slang.successor(&quot;&lt;&lt;koala&gt;&gt;&quot;) == &quot;&lt;&lt;koalb&gt;&gt;&quot;
+slang.successor(&quot;1999zzz&quot;)   == &quot;2000aaa&quot;
+slang.successor(&quot;ZZZ9999&quot;)   == &quot;AAAA0000&quot;
+</code></pre>
+        
+          <div class='highlight'><pre>    slang.successor = <span class="function"><span class="keyword">function</span> <span class="title">successor</span><span class="params">(input)</span> {</span>
+        <span class="keyword">var</span> alphabet = <span class="string">'abcdefghijklmnopqrstuvwxyz'</span>,
+            length = alphabet.length,
+            result = input,
+            i = input.length;
+
+        <span class="keyword">while</span>(i &gt;= <span class="number">0</span>) {
+            <span class="keyword">var</span> last = input.charAt(--i),
+                next = <span class="string">''</span>,
+                carry = <span class="literal">false</span>;
+
+            <span class="keyword">if</span> (isNaN(last)) {
+                index = alphabet.indexOf(last.toLowerCase());
+
+                <span class="keyword">if</span> (index === -<span class="number">1</span>) {
+                    next = last;
+                    carry = <span class="literal">true</span>;
+                }
+                <span class="keyword">else</span> {
+                    <span class="keyword">var</span> isUpperCase = last === last.toUpperCase();
+                    next = alphabet.charAt((index + <span class="number">1</span>) % length);
+                    <span class="keyword">if</span> (isUpperCase) {
+                        next = next.toUpperCase();
+                    }
+
+                    carry = index + <span class="number">1</span> &gt;= length;
+                    <span class="keyword">if</span> (carry &amp;&amp; i === <span class="number">0</span>) {
+                        <span class="keyword">var</span> added = isUpperCase ? <span class="string">'A'</span> : <span class="string">'a'</span>;
+                        result = added + next + result.slice(<span class="number">1</span>);
+                        <span class="keyword">break</span>;
+                    }
+                }
+            }
+            <span class="keyword">else</span> {
+                next = +last + <span class="number">1</span>;
+                <span class="keyword">if</span>(next &gt; <span class="number">9</span>) {
+                    next = <span class="number">0</span>;
+                    carry = <span class="literal">true</span>
+                }
+
+                <span class="keyword">if</span> (carry &amp;&amp; i === <span class="number">0</span>) {
+                    result = <span class="string">'1'</span> + next + result.slice(<span class="number">1</span>);
+                    <span class="keyword">break</span>;
+                }
+            }
+
+            result = result.slice(<span class="number">0</span>, i) + next + result.slice(i + <span class="number">1</span>);
+            <span class="keyword">if</span> (!carry) {
+                <span class="keyword">break</span>;
+            }
+        }
+        <span class="keyword">return</span> result;
+    }</pre></div>
+        
+      
+        
+        <p>Returns a unique guid of the specified length, or 32 by default</p>
+
+        
+          <div class='highlight'><pre>    slang.guid = <span class="function"><span class="keyword">function</span> <span class="title">guid</span><span class="params">(length)</span> {</span>
+        <span class="keyword">var</span> buf = [],
+            chars = <span class="string">'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'</span>,
+            charlen = chars.length,
+            length = length || <span class="number">32</span>;
+            
+        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; length; i++) {
+            buf[i] = chars.charAt(Math.floor(Math.random() * charlen));
+        }
+        
+        <span class="keyword">return</span> buf.join(<span class="string">''</span>);
+    }</pre></div>
+        
+      
+        
+        <h2 id="inflection">Inflection</h2>
+
+        
+      
+        
+        
+        
+      
+        
+        <p>Set default language for inflection methods</p>
+
+        
+          <div class='highlight'><pre>    slang.lang = <span class="string">'en'</span>;</pre></div>
+        
+      
+        
+        <p>Object to hold languages for inflection
+Add slang.Language objects to this</p>
+
+        
+          <div class='highlight'><pre>    slang.languages = {};</pre></div>
+        
+      
+        
+        <p>Define object to hold information about a language</p>
+
+        
+          <div class='highlight'><pre>    <span class="function"><span class="keyword">function</span> <span class="title">Language</span><span class="params">()</span> {</span>
+        <span class="keyword">this</span>.plural = [];
+        <span class="keyword">this</span>.singular = [];
+        <span class="keyword">this</span>.uncountable = [];
+        <span class="keyword">this</span>.irregular = {
+            plural: {},
+            singular: {}
+        };
+    }
+    
+    slang.Language = Language;</pre></div>
+        
+      
+        
+        <p>Adds an array of irregular words to the language.
+Provide an array of arrays containing the singular
+and plural versions of the word</p>
+
+        
+          <div class='highlight'><pre>    Language.prototype.addIrregular = <span class="function"><span class="keyword">function</span><span class="params">(irregular)</span> {</span>
+        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = irregular.length; i &lt; len; i++) {
+            <span class="keyword">var</span> item = irregular[i];
+            <span class="keyword">this</span>.irregular.plural[item[<span class="number">0</span>]] = item[<span class="number">1</span>];
+            <span class="keyword">this</span>.irregular.singular[item[<span class="number">1</span>]] = item[<span class="number">0</span>];
+        }
+    }</pre></div>
+        
+      
+        
+        <p>Inflects a word by the specified type (&#39;singular&#39; or &#39;plural&#39;)</p>
+
+        
+          <div class='highlight'><pre>    Language.prototype.inflect = <span class="function"><span class="keyword">function</span><span class="params">(word, type)</span> {</span></pre></div>
+        
+      
+        
+        <p>Check if this word is uncountable</p>
+
+        
+          <div class='highlight'><pre>        <span class="keyword">if</span> (~<span class="keyword">this</span>.uncountable.indexOf(word.toLowerCase()))
+            <span class="keyword">return</span> word;</pre></div>
+        
+      
+        
+        <p>Check if this word is irregular</p>
+
+        
+          <div class='highlight'><pre>        <span class="keyword">var</span> irregular = <span class="keyword">this</span>.irregular[type][word];
+        <span class="keyword">if</span> (irregular)
+            <span class="keyword">return</span> irregular;</pre></div>
+        
+      
+        
+        <p>Check rules until a match is found</p>
+
+        
+          <div class='highlight'><pre>        <span class="keyword">var</span> rules = <span class="keyword">this</span>[type];
+        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = rules.length; i &lt; len; i++) {
+            <span class="keyword">var</span> regexp = rules[i][<span class="number">0</span>];
+            <span class="keyword">if</span> (regexp.test(word))
+                <span class="keyword">return</span> word.replace(regexp, rules[i][<span class="number">1</span>]);
+        }
+        
+        <span class="keyword">return</span> word;
+    }</pre></div>
+        
+      
+        
+        <p>Pluralize a word in the specified language
+or <code>slang.lang</code> by default</p>
+
+        
+          <div class='highlight'><pre>    slang.pluralize = <span class="function"><span class="keyword">function</span><span class="params">(word, lang)</span> {</span>
+        lang || (lang = slang.lang);
+        lang = slang.languages[lang];
+        
+        <span class="keyword">if</span> (!lang)
+            <span class="keyword">return</span> word;
+        
+        <span class="keyword">return</span> lang.inflect(word, <span class="string">'plural'</span>);
+    }</pre></div>
+        
+      
+        
+        <p>Singularize a word in the specified language
+or <code>slang.lang</code> by default</p>
+
+        
+          <div class='highlight'><pre>    slang.singularize = <span class="function"><span class="keyword">function</span><span class="params">(word, lang)</span> {</span>
+        lang || (lang = slang.lang);
+        lang = slang.languages[lang];
+        
+        <span class="keyword">if</span> (!lang)
+            <span class="keyword">return</span> word;
+            
+        <span class="keyword">return</span> lang.inflect(word, <span class="string">'singular'</span>);
+    }</pre></div>
+        
+      
+        
+        <p>Adds the methods from the slang object to String.prototype</p>
+
+        
+          <div class='highlight'><pre>    slang.addToPrototype = <span class="function"><span class="keyword">function</span> <span class="title">addToPrototype</span><span class="params">()</span> {</span>
+        <span class="keyword">for</span> (key <span class="keyword">in</span> slang) {
+            <span class="keyword">if</span> (key === <span class="string">'guid'</span> || 
+                key === <span class="string">'lang'</span> ||
+                key === <span class="string">'languages'</span> ||
+                key === <span class="string">'Language'</span> ||
+                key === <span class="string">'humanize'</span> ||
+                key === <span class="string">'isString'</span> || 
+                key === <span class="string">'version'</span> || 
+                key === <span class="string">'addToPrototype'</span>) {
+                    <span class="keyword">continue</span>;
+            }
+            
+            (<span class="function"><span class="keyword">function</span><span class="params">(key)</span> {</span>
+                String.prototype[key] = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+                    <span class="keyword">var</span> args = Array.prototype.slice.call(arguments)
+                    <span class="keyword">return</span> slang[key].apply(slang, [<span class="keyword">this</span>].concat(args));
+                }
+            })(key);
+        }
+    }</pre></div>
+        
+      
+        
+        <h2 id="english-inflector">English Inflector</h2>
+
+        
+      
+        
+        
+        
+      
+        
+        <p>Define language for English</p>
+
+        
+          <div class='highlight'><pre>    <span class="keyword">var</span> en = slang.languages[<span class="string">'en'</span>] = <span class="keyword">new</span> slang.Language();
+    
+    en.plural = [
+        [<span class="regexp">/(todo)$/i</span>, <span class="string">"$1s"</span>],
+        [<span class="regexp">/(matr|vert|ind)(?:ix|ex)$/i</span>, <span class="string">"$1ices"</span>],
+        [<span class="regexp">/(octop|vir)us$/i</span>, <span class="string">"$1i"</span>],
+        [<span class="regexp">/(alias|status)$/i</span>, <span class="string">"$1es"</span>],
+        [<span class="regexp">/(cris|ax|test)is$/i</span>, <span class="string">"$1es"</span>],
+        [<span class="regexp">/(s|ss|sh|ch|x|o)$/i</span>, <span class="string">"$1es"</span>],
+        [<span class="regexp">/y$/i</span>, <span class="string">"ies"</span>],
+        [<span class="regexp">/(o|e)y$/i</span>, <span class="string">"$1ys"</span>],
+        [<span class="regexp">/([ti])um$/i</span>, <span class="string">"$1a"</span>],
+        [<span class="regexp">/sis$/i</span>, <span class="string">"ses"</span>],
+        [<span class="regexp">/(?:([^f])fe|([lr])f)$/i</span>, <span class="string">"$1$2ves"</span>],
+        [<span class="regexp">/([^aeiouy]|qu)y$/i</span>, <span class="string">"$1ies"</span>],
+        [<span class="regexp">/([m|l])ouse$/i</span>, <span class="string">"$1ice"</span>],
+        [<span class="regexp">/^(ox)$/i</span>, <span class="string">"$1en"</span>],
+        [<span class="regexp">/(quiz)$/i</span>, <span class="string">"$1zes"</span>],
+        [<span class="regexp">/$/</span>, <span class="string">"s"</span>]
+    ];
+
+    en.singular = [
+        [<span class="regexp">/(bu|mis|kis)s$/i</span>, <span class="string">"$1s"</span>],
+        [<span class="regexp">/([ti])a$/i</span>, <span class="string">"$1um"</span>],
+        [<span class="regexp">/((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$/i</span>, <span class="string">"$1$2sis"</span>],
+        [<span class="regexp">/(^analy)ses$/i</span>, <span class="string">"$1sis"</span>],
+        [<span class="regexp">/([^f])ves$/i</span>, <span class="string">"$1fe"</span>],
+        [<span class="regexp">/([lr])ves$/i</span>, <span class="string">"$1f"</span>],
+        [<span class="regexp">/([^aeiouy]|qu)ies$/i</span>, <span class="string">"$1y"</span>],
+        [<span class="regexp">/ies$/i</span>, <span class="string">"ie"</span>],
+        [<span class="regexp">/(x|ch|ss|sh)es$/i</span>, <span class="string">"$1"</span>],
+        [<span class="regexp">/([m|l])ice$/i</span>, <span class="string">"$1ouse"</span>],
+        [<span class="regexp">/(bus)es$/i</span>, <span class="string">"$1"</span>],
+        [<span class="regexp">/(shoe)s$/i</span>, <span class="string">"$1"</span>],
+        [<span class="regexp">/(o)es$/i</span>, <span class="string">"$1"</span>],
+        [<span class="regexp">/(cris|ax|test)es$/i</span>, <span class="string">"$1is"</span>],
+        [<span class="regexp">/(octop|vir)i$/i</span>, <span class="string">"$1us"</span>],
+        [<span class="regexp">/(alias|status)es$/i</span>, <span class="string">"$1"</span>],
+        [<span class="regexp">/^(ox)en/i</span>, <span class="string">"$1"</span>],
+        [<span class="regexp">/(vert|ind)ices$/i</span>, <span class="string">"$1ex"</span>],
+        [<span class="regexp">/(matr)ices$/i</span>, <span class="string">"$1ix"</span>],
+        [<span class="regexp">/(quiz)zes$/i</span>, <span class="string">"$1"</span>],
+        [<span class="regexp">/s$/i</span>, <span class="string">""</span>]
+    ];
+
+    en.addIrregular([
+        [<span class="string">'i'</span>, <span class="string">'we'</span>],
+        [<span class="string">'person'</span>, <span class="string">'people'</span>],
+        [<span class="string">'man'</span>, <span class="string">'men'</span>],
+        [<span class="string">'child'</span>, <span class="string">'children'</span>],
+        [<span class="string">'move'</span>, <span class="string">'moves'</span>],
+        [<span class="string">'she'</span>, <span class="string">'they'</span>],
+        [<span class="string">'he'</span>, <span class="string">'they'</span>],
+        [<span class="string">'myself'</span>, <span class="string">'ourselves'</span>],
+        [<span class="string">'yourself'</span>, <span class="string">'ourselves'</span>],
+        [<span class="string">'himself'</span>, <span class="string">'themselves'</span>],
+        [<span class="string">'herself'</span>, <span class="string">'themselves'</span>],
+        [<span class="string">'themself'</span>, <span class="string">'themselves'</span>],
+        [<span class="string">'mine'</span>, <span class="string">'ours'</span>],
+        [<span class="string">'hers'</span>, <span class="string">'theirs'</span>],
+        [<span class="string">'his'</span>, <span class="string">'theirs'</span>],
+        [<span class="string">'its'</span>, <span class="string">'theirs'</span>],
+        [<span class="string">'theirs'</span>, <span class="string">'theirs'</span>],
+        [<span class="string">'sex'</span>, <span class="string">'sexes'</span>],
+        [<span class="string">'this'</span>, <span class="string">'that'</span>]
+    ]);
+
+    en.uncountable = [
+        <span class="string">'advice'</span>,
+        <span class="string">'enegery'</span>,
+        <span class="string">'excretion'</span>,
+        <span class="string">'digestion'</span>,
+        <span class="string">'cooperation'</span>,
+        <span class="string">'health'</span>,
+        <span class="string">'justice'</span>,
+        <span class="string">'jeans'</span>,
+        <span class="string">'labour'</span>,
+        <span class="string">'machinery'</span>,
+        <span class="string">'equipment'</span>,
+        <span class="string">'information'</span>,
+        <span class="string">'pollution'</span>,
+        <span class="string">'sewage'</span>,
+        <span class="string">'paper'</span>,
+        <span class="string">'money'</span>,
+        <span class="string">'species'</span>,
+        <span class="string">'series'</span>,
+        <span class="string">'rain'</span>,
+        <span class="string">'rice'</span>,
+        <span class="string">'fish'</span>,
+        <span class="string">'sheep'</span>,
+        <span class="string">'moose'</span>,
+        <span class="string">'deer'</span>,
+        <span class="string">'bison'</span>,
+        <span class="string">'proceedings'</span>,
+        <span class="string">'shears'</span>,
+        <span class="string">'pincers'</span>,
+        <span class="string">'breeches'</span>,
+        <span class="string">'hijinks'</span>,
+        <span class="string">'clippers'</span>,
+        <span class="string">'chassis'</span>,
+        <span class="string">'innings'</span>,
+        <span class="string">'elk'</span>,
+        <span class="string">'rhinoceros'</span>,
+        <span class="string">'swine'</span>,
+        <span class="string">'you'</span>,
+        <span class="string">'news'</span>
+    ];
+
+})();</pre></div>
+        
+      
+      <div class="fleur">h</div>
+    </div>
+  </div>
+</body>
+</html>

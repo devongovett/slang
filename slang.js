@@ -74,6 +74,12 @@
         });
     }
     
+    // Converts a camelCased string into a series of words separated
+    // by `separator` or a space by default
+    slang.uncamelize = function uncamelize(input, separator) {
+        return input.replace(/([a-z\d])([A-Z])/g, '$1' + (separator || ' ') + '$2');
+    }
+    
     // Converts a string of words or a camelCased string into a series of words
     // separated by a dash (`-`)
     slang.dasherize = function dasherize(input) {
