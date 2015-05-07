@@ -1,14 +1,8 @@
-// package metadata file for Meteor.js
-'use strict';
-
-var packageName = 'devongovett:slang';
-var packageJson = JSON.parse(Npm.require("fs").readFileSync('package.json'));
-
 Package.describe({
-  name: packageName,
-  version: packageJson.version,
+  name: 'devongovett:slang',
+  version: '0.0.1',
   // Brief, one-line summary of the package.
-  summary: 'Slang.js: A collection of utility functions for working with strings in JavaScript in the browser or Node.',
+  summary: 'A collection of utility functions for working with strings in JavaScript in the browser or Node.',
   // URL to the Git repository containing the source code for this package.
   git: 'https://github.com/andyp22/slang',
   // By default, Meteor will default to using README.md for documentation.

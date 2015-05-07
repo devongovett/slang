@@ -1,5 +1,5 @@
 // Write your tests here!
 // Here is an example.
-Tinytest.add('example', function (test) {
-  test.equal(true, true);
+Tinytest.add('slang.isString', function (test) {
+  test.equal(slang.isString('test'), true);
 });
